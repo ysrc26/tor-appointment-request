@@ -48,7 +48,7 @@ const PricingPlans = ({ showTitle = true, compact = false }: PricingPlansProps) 
         'Basic reports',
         'Email support'
       ],
-      buttonText: 'Upgrade to Premium',
+      buttonText: 'Start 7-Day Free Trial',
       popular: true,
       action: () => createCheckoutSession('premium')
     },
@@ -68,7 +68,7 @@ const PricingPlans = ({ showTitle = true, compact = false }: PricingPlansProps) 
         'Data analytics',
         'Advanced integrations'
       ],
-      buttonText: 'Upgrade to Business',
+      buttonText: 'Start 7-Day Free Trial',
       popular: false,
       action: () => createCheckoutSession('business')
     }
@@ -211,7 +211,7 @@ const PricingPlans = ({ showTitle = true, compact = false }: PricingPlansProps) 
       {user && (
         <div className="text-center">
           <p className="text-sm text-muted-foreground">
-            Cancel or change your subscription anytime. No long-term commitment.
+            7-day free trial • Cancel anytime • No long-term commitment
           </p>
         </div>
       )}

@@ -36,7 +36,7 @@ const BusinessSetup = () => {
   const generateSlug = (name: string) => {
     return name
       .toLowerCase()
-      .replace(/[^\u0590-\u05FFa-z0-9\s]/g, '') // Keep Hebrew, English, numbers, spaces
+      .replace(/[^a-z0-9\s]/g, '') // Keep English, numbers, spaces
       .replace(/\s+/g, '-') // Replace spaces with hyphens
       .slice(0, 50); // Limit length
   };
@@ -66,8 +66,8 @@ const BusinessSetup = () => {
     e.preventDefault();
     if (!userProfile?.id) {
       toast({
-        title: "שגיאה",
-        description: "לא נמצא פרופיל משתמש",
+        title: "Error",
+        description: "User profile not found",
         variant: "destructive"
       });
       return;
@@ -85,8 +85,8 @@ const BusinessSetup = () => {
 
       if (existingBusiness) {
         toast({
-          title: "כתובת תפוסה",
-          description: "הכתובת הזו כבר תפוסה, אנא בחר שם אחר לעסק",
+          title: "Address Taken",
+          description: "This address is already taken, please choose a different business name",
           variant: "destructive"
         });
         setIsLoading(false);
@@ -112,22 +112,22 @@ const BusinessSetup = () => {
       if (error) {
         console.error('Business creation error:', error);
         toast({
-          title: "שגיאה ביצירת העסק",
-          description: "אירעה שגיאה ביצירת העסק. נסה שוב.",
+          title: "Business Creation Error",
+          description: "An error occurred while creating the business. Please try again.",
           variant: "destructive"
         });
       } else {
         toast({
-          title: "העסק נוצר בהצלחה!",
-          description: `העסק ${formData.name} נוצר והוא זמין בכתובת mytor.app/${formData.slug}`,
+          title: "Business Created Successfully!",
+          description: `Business ${formData.name} has been created and is available at mytor.app/${formData.slug}`,
         });
         navigate('/dashboard');
       }
     } catch (error) {
       console.error('Unexpected error:', error);
       toast({
-        title: "שגיאה",
-        description: "אירעה שגיאה לא צפויה",
+        title: "Error",
+        description: "An unexpected error occurred",
         variant: "destructive"
       });
     }
@@ -152,7 +152,7 @@ const BusinessSetup = () => {
           </div>
           
           <Button variant="ghost" onClick={() => navigate('/dashboard')}>
-            חזרה לדשבורד
+            Back to Dashboard
           </Button>
         </div>
       </header>
@@ -163,10 +163,10 @@ const BusinessSetup = () => {
             <Store className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-foreground mb-2">
-            בואו נגדיר את העסק שלך
+            Let's Set Up Your Business
           </h1>
           <p className="text-muted-foreground">
-            מלא את הפרטים הבסיסיים כדי ליצור את הדף הציבורי של העסק
+            Fill in the basic details to create your business public page
           </p>
         </div>
 
@@ -174,29 +174,29 @@ const BusinessSetup = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Store className="w-5 h-5" />
-              פרטי העסק
+              Business Details
             </CardTitle>
             <CardDescription>
-              המידע הזה יוצג בדף הציבורי של העסק שלך
+              This information will be displayed on your business public page
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Business Name */}
               <div className="space-y-2">
-                <Label htmlFor="name">שם העסק *</Label>
+                <Label htmlFor="name">Business Name *</Label>
                 <Input
                   id="name"
                   value={formData.name}
                   onChange={handleNameChange}
-                  placeholder="לדוגמה: סלון יופי רחל"
+                  placeholder="e.g., Rachel's Beauty Salon"
                   required
                 />
               </div>
 
               {/* Slug Input */}
               <div className="space-y-2">
-                <Label htmlFor="slug">כתובת הדף הציבורי *</Label>
+                <Label htmlFor="slug">Public Page Address *</Label>
                 <div className="flex items-center gap-2">
                   <span className="text-sm text-muted-foreground whitespace-nowrap">mytor.app/</span>
                   <Input
@@ -210,33 +210,33 @@ const BusinessSetup = () => {
                   />
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  רק אותיות באנגלית, מספרים ומקפים. הכתובת תהיה זמינה לציבור לקביעת תורים
+                  Only English letters, numbers, and hyphens. This address will be publicly available for booking appointments
                 </p>
               </div>
 
               {/* Description */}
               <div className="space-y-2">
-                <Label htmlFor="description">תיאור העסק</Label>
+                <Label htmlFor="description">Business Description</Label>
                 <Textarea
                   id="description"
                   value={formData.description}
                   onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                  placeholder="תאר את העסק שלך, השירותים שאתה מציע והניסיון שלך..."
+                  placeholder="Describe your business, the services you offer, and your experience..."
                   rows={4}
                 />
               </div>
 
               {/* Phone */}
               <div className="space-y-2">
-                <Label htmlFor="phone">טלפון עסק</Label>
+                <Label htmlFor="phone">Business Phone</Label>
                 <div className="relative">
-                  <Phone className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                  <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                   <Input
                     id="phone"
                     value={formData.phone}
                     onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
                     placeholder="050-1234567"
-                    className="pr-10"
+                    className="pl-10"
                     dir="ltr"
                   />
                 </div>
@@ -244,27 +244,27 @@ const BusinessSetup = () => {
 
               {/* Address */}
               <div className="space-y-2">
-                <Label htmlFor="address">כתובת העסק</Label>
+                <Label htmlFor="address">Business Address</Label>
                 <div className="relative">
-                  <MapPin className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                   <Input
                     id="address"
                     value={formData.address}
                     onChange={(e) => setFormData(prev => ({ ...prev, address: e.target.value }))}
-                    placeholder="רחוב דוגמה 123, תל אביב"
-                    className="pr-10"
+                    placeholder="123 Example Street, Tel Aviv"
+                    className="pl-10"
                   />
                 </div>
               </div>
 
               {/* Terms */}
               <div className="space-y-2">
-                <Label htmlFor="terms">תנאי התורים (אופציונלי)</Label>
+                <Label htmlFor="terms">Appointment Terms (Optional)</Label>
                 <Textarea
                   id="terms"
                   value={formData.terms}
                   onChange={(e) => setFormData(prev => ({ ...prev, terms: e.target.value }))}
-                  placeholder="לדוגמה: ביטול עד 24 שעות לפני התור, דמי ביטול 50 ש״ח..."
+                  placeholder="e.g., Cancellation up to 24 hours before appointment, 50 NIS cancellation fee..."
                   rows={3}
                 />
               </div>
@@ -276,8 +276,8 @@ const BusinessSetup = () => {
                 variant="hero"
                 size="lg"
               >
-                {isLoading ? 'יוצר עסק...' : 'צור עסק'}
-                <ArrowRight className="w-4 h-4 mr-2" />
+                {isLoading ? 'Creating Business...' : 'Create Business'}
+                <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </form>
           </CardContent>

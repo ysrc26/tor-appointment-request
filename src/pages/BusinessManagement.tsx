@@ -54,8 +54,8 @@ const BusinessManagement = () => {
       if (error) {
         console.error('Error fetching business:', error);
         toast({
-          title: "שגיאה",
-          description: "לא ניתן לטעון את פרטי העסק",
+          title: "Error",
+          description: "Unable to load business details",
           variant: "destructive"
         });
         navigate('/dashboard');
@@ -76,7 +76,7 @@ const BusinessManagement = () => {
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/10 flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-muted-foreground">טוען...</p>
+          <p className="text-muted-foreground">Loading...</p>
         </div>
       </div>
     );
@@ -93,8 +93,8 @@ const BusinessManagement = () => {
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="sm" onClick={() => navigate('/dashboard')}>
-              <ArrowLeft className="w-4 h-4 ml-2" />
-              חזרה לדשבורד
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Dashboard
             </Button>
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-gradient-hero rounded-lg flex items-center justify-center">
@@ -109,8 +109,8 @@ const BusinessManagement = () => {
             size="sm"
             onClick={() => window.open(`/${business.slug}`, '_blank')}
           >
-            <ExternalLink className="w-4 h-4 ml-2" />
-            הדף הציבורי
+            <ExternalLink className="w-4 h-4 mr-2" />
+            Public Page
           </Button>
         </div>
       </header>
@@ -118,59 +118,59 @@ const BusinessManagement = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">
-            ניהול העסק
+            Business Management
           </h1>
           <p className="text-muted-foreground">
-            נהל את השירותים, שעות הפעילות והגדרות העסק שלך
+            Manage your services, availability, and business settings
           </p>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-5">
-            <TabsTrigger value="overview">סקירה כללית</TabsTrigger>
-            <TabsTrigger value="appointments">תורים</TabsTrigger>
-            <TabsTrigger value="services">השירותים</TabsTrigger>
-            <TabsTrigger value="availability">שעות פעילות</TabsTrigger>
-            <TabsTrigger value="settings">הגדרות</TabsTrigger>
+            <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="appointments">Appointments</TabsTrigger>
+            <TabsTrigger value="services">Services</TabsTrigger>
+            <TabsTrigger value="availability">Availability</TabsTrigger>
+            <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">תורים השבוע</CardTitle>
+                  <CardTitle className="text-sm font-medium">This Week's Appointments</CardTitle>
                   <Calendar className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">12</div>
                   <p className="text-xs text-muted-foreground">
-                    +2 מהשבוע הקודם
+                    +2 from last week
                   </p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">שירותים פעילים</CardTitle>
+                  <CardTitle className="text-sm font-medium">Active Services</CardTitle>
                   <Settings className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">3</div>
                   <p className="text-xs text-muted-foreground">
-                    סך הכל שירותים זמינים
+                    Total available services
                   </p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">זמן ממוצע</CardTitle>
+                  <CardTitle className="text-sm font-medium">Average Duration</CardTitle>
                   <Clock className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">45 ד'</div>
+                  <div className="text-2xl font-bold">45 min</div>
                   <p className="text-xs text-muted-foreground">
-                    משך שירות ממוצע
+                    Average service duration
                   </p>
                 </CardContent>
               </Card>
@@ -178,38 +178,38 @@ const BusinessManagement = () => {
 
             <Card>
               <CardHeader>
-                <CardTitle>פעולות מהירות</CardTitle>
+                <CardTitle>Quick Actions</CardTitle>
                 <CardDescription>
-                  נהל את העסק שלך בקלות
+                  Manage your business easily
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid gap-4 md:grid-cols-2">
                   <Button variant="outline" className="justify-start h-auto p-4" onClick={() => setActiveTab('services')}>
-                    <div className="text-right">
-                      <div className="font-medium">הוסף שירות חדש</div>
-                      <div className="text-sm text-muted-foreground">הגדר שירות חדש עם מחיר ומשך זמן</div>
+                    <div className="text-left">
+                      <div className="font-medium">Add New Service</div>
+                      <div className="text-sm text-muted-foreground">Set up a new service with price and duration</div>
                     </div>
                   </Button>
                   
                   <Button variant="outline" className="justify-start h-auto p-4" onClick={() => setActiveTab('availability')}>
-                    <div className="text-right">
-                      <div className="font-medium">עדכן שעות פעילות</div>
-                      <div className="text-sm text-muted-foreground">קבע מתי אתה זמין לקבלת תורים</div>
+                    <div className="text-left">
+                      <div className="font-medium">Update Availability</div>
+                      <div className="text-sm text-muted-foreground">Set when you're available for appointments</div>
                     </div>
                   </Button>
                   
                   <Button variant="outline" className="justify-start h-auto p-4" onClick={() => setActiveTab('appointments')}>
-                    <div className="text-right">
-                      <div className="font-medium">צפה בתורים</div>
-                      <div className="text-sm text-muted-foreground">ראה ונהל את כל התורים שלך</div>
+                    <div className="text-left">
+                      <div className="font-medium">View Appointments</div>
+                      <div className="text-sm text-muted-foreground">See and manage all your appointments</div>
                     </div>
                   </Button>
                   
                   <Button variant="outline" className="justify-start h-auto p-4" onClick={() => setActiveTab('settings')}>
-                    <div className="text-right">
-                      <div className="font-medium">עדכן פרטי עסק</div>
-                      <div className="text-sm text-muted-foreground">שנה תיאור, טלפון וכתובת</div>
+                    <div className="text-left">
+                      <div className="font-medium">Update Business Details</div>
+                      <div className="text-sm text-muted-foreground">Change description, phone, and address</div>
                     </div>
                   </Button>
                 </div>
