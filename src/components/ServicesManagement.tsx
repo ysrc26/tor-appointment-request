@@ -242,8 +242,8 @@ const ServicesManagement = ({ businessId }: ServicesManagementProps) => {
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="price">Price (₪)</Label>
+                      <div>
+                        <Label htmlFor="price">Price ($)</Label>
                       <Input
                         id="price"
                         type="number"
@@ -320,7 +320,7 @@ const ServicesManagement = ({ businessId }: ServicesManagementProps) => {
                       {service.price && (
                         <div className="flex items-center gap-1">
                           <DollarSign className="w-4 h-4" />
-                          ₪{service.price}
+                          ${service.price}
                         </div>
                       )}
                     </div>

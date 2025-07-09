@@ -184,7 +184,7 @@ const PublicBooking = () => {
                         </div>
                       </div>
                       {service.price && (
-                        <span className="font-semibold text-primary">₪{service.price}</span>
+                        <span className="font-semibold text-primary">${service.price}</span>
                       )}
                     </div>
                   ))}
