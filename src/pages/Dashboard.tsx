@@ -158,14 +158,19 @@ const Dashboard = () => {
                         </p>
                       )}
                       <div className="flex gap-2">
-                        <Button className="flex-1" variant="outline" size="sm">
+                        <Button 
+                          className="flex-1" 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => navigate(`/business/${business.id}`)}
+                        >
                           <Settings className="w-4 h-4 mr-2" />
                           ניהול
                         </Button>
                         <Button 
                           variant="outline" 
                           size="sm"
-                          onClick={() => window.open(`https://mytor.app/${business.slug}`, '_blank')}
+                          onClick={() => window.open(`/${business.slug}`, '_blank')}
                         >
                           <ExternalLink className="w-4 h-4" />
                         </Button>

@@ -46,7 +46,19 @@ const BusinessSetup = () => {
     setFormData(prev => ({
       ...prev,
       name,
-      slug: generateSlug(name)
+      // Only auto-generate slug if it's empty or the user hasn't manually edited it
+      slug: prev.slug === generateSlug(prev.name) || prev.slug === '' ? generateSlug(name) : prev.slug
+    }));
+  };
+
+  const handleSlugChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const slug = e.target.value
+      .toLowerCase()
+      .replace(/[^a-z0-9-]/g, '') // Only English letters, numbers, and hyphens
+      .slice(0, 50);
+    setFormData(prev => ({
+      ...prev,
+      slug
     }));
   };
 
@@ -182,18 +194,23 @@ const BusinessSetup = () => {
                 />
               </div>
 
-              {/* Slug Preview */}
+              {/* Slug Input */}
               <div className="space-y-2">
-                <Label htmlFor="slug">כתובת הדף הציבורי</Label>
-                <div className="flex items-center gap-2 p-3 bg-muted rounded-md">
-                  <Globe className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm text-muted-foreground">mytor.app/</span>
-                  <span className="font-medium text-foreground">
-                    {formData.slug || 'your-business-name'}
-                  </span>
+                <Label htmlFor="slug">כתובת הדף הציבורי *</Label>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-muted-foreground whitespace-nowrap">mytor.app/</span>
+                  <Input
+                    id="slug"
+                    value={formData.slug}
+                    onChange={handleSlugChange}
+                    placeholder="my-business"
+                    required
+                    className="flex-1"
+                    dir="ltr"
+                  />
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  הכתובת נוצרת אוטומטית מהשם של העסק
+                  רק אותיות באנגלית, מספרים ומקפים. הכתובת תהיה זמינה לציבור לקביעת תורים
                 </p>
               </div>
 
