@@ -7,6 +7,9 @@ import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Calendar, Settings, Clock, Users, ArrowLeft, ExternalLink } from 'lucide-react';
+import ServicesManagement from '@/components/ServicesManagement';
+import AvailabilityManagement from '@/components/AvailabilityManagement';
+import BusinessSettings from '@/components/BusinessSettings';
 
 interface Business {
   id: string;
@@ -22,6 +25,7 @@ interface Business {
 const BusinessManagement = () => {
   const [business, setBusiness] = useState<Business | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('overview');
   const { businessId } = useParams();
   const { user, userProfile } = useAuth();
   const navigate = useNavigate();
@@ -120,7 +124,7 @@ const BusinessManagement = () => {
           </p>
         </div>
 
-        <Tabs defaultValue="overview" className="space-y-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="overview">סקירה כללית</TabsTrigger>
             <TabsTrigger value="services">השירותים</TabsTrigger>
@@ -179,14 +183,14 @@ const BusinessManagement = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid gap-4 md:grid-cols-2">
-                  <Button variant="outline" className="justify-start h-auto p-4">
+                  <Button variant="outline" className="justify-start h-auto p-4" onClick={() => setActiveTab('services')}>
                     <div className="text-right">
                       <div className="font-medium">הוסף שירות חדש</div>
                       <div className="text-sm text-muted-foreground">הגדר שירות חדש עם מחיר ומשך זמן</div>
                     </div>
                   </Button>
                   
-                  <Button variant="outline" className="justify-start h-auto p-4">
+                  <Button variant="outline" className="justify-start h-auto p-4" onClick={() => setActiveTab('availability')}>
                     <div className="text-right">
                       <div className="font-medium">עדכן שעות פעילות</div>
                       <div className="text-sm text-muted-foreground">קבע מתי אתה זמין לקבלת תורים</div>
@@ -200,7 +204,7 @@ const BusinessManagement = () => {
                     </div>
                   </Button>
                   
-                  <Button variant="outline" className="justify-start h-auto p-4">
+                  <Button variant="outline" className="justify-start h-auto p-4" onClick={() => setActiveTab('settings')}>
                     <div className="text-right">
                       <div className="font-medium">עדכן פרטי עסק</div>
                       <div className="text-sm text-muted-foreground">שנה תיאור, טלפון וכתובת</div>
@@ -212,80 +216,18 @@ const BusinessManagement = () => {
           </TabsContent>
 
           <TabsContent value="services">
-            <Card>
-              <CardHeader>
-                <CardTitle>השירותים שלי</CardTitle>
-                <CardDescription>
-                  נהל את השירותים שאתה מציע
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-8">
-                  <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-medium mb-2">אין שירותים עדיין</h3>
-                  <p className="text-muted-foreground mb-4">
-                    הוסף את השירות הראשון שלך כדי שלקוחות יוכלו לקבוע תורים
-                  </p>
-                  <Button>הוסף שירות ראשון</Button>
-                </div>
-              </CardContent>
-            </Card>
+            <ServicesManagement businessId={businessId!} />
           </TabsContent>
 
           <TabsContent value="availability">
-            <Card>
-              <CardHeader>
-                <CardTitle>שעות פעילות</CardTitle>
-                <CardDescription>
-                  הגדר מתי אתה זמין לקבלת תורים
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-8">
-                  <Clock className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-medium mb-2">לא הוגדרו שעות פעילות</h3>
-                  <p className="text-muted-foreground mb-4">
-                    הגדר את שעות הפעילות שלך בכל יום בשבוע
-                  </p>
-                  <Button>הגדר שעות פעילות</Button>
-                </div>
-              </CardContent>
-            </Card>
+            <AvailabilityManagement businessId={businessId!} userId={userProfile!.id} />
           </TabsContent>
 
           <TabsContent value="settings">
-            <Card>
-              <CardHeader>
-                <CardTitle>הגדרות העסק</CardTitle>
-                <CardDescription>
-                  נהל את הגדרות העסק שלך
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  <div className="space-y-2">
-                    <h4 className="font-medium">פרטי העסק</h4>
-                    <div className="text-sm text-muted-foreground space-y-1">
-                      <p><strong>שם:</strong> {business.name}</p>
-                      <p><strong>כתובת ציבורית:</strong> mytor.app/{business.slug}</p>
-                      {business.phone && <p><strong>טלפון:</strong> {business.phone}</p>}
-                      {business.address && <p><strong>כתובת:</strong> {business.address}</p>}
-                    </div>
-                    <Button variant="outline" size="sm">ערוך פרטים</Button>
-                  </div>
-
-                  <div className="space-y-2">
-                    <h4 className="font-medium">סטטוס העסק</h4>
-                    <p className="text-sm text-muted-foreground">
-                      העסק {business.is_active ? 'פעיל' : 'לא פעיל'} ו{business.is_active ? 'זמין' : 'לא זמין'} לקבלת תורים
-                    </p>
-                    <Button variant="outline" size="sm">
-                      {business.is_active ? 'השבת עסק' : 'הפעל עסק'}
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <BusinessSettings 
+              business={business} 
+              onBusinessUpdate={(updatedBusiness) => setBusiness(updatedBusiness)} 
+            />
           </TabsContent>
         </Tabs>
       </div>
