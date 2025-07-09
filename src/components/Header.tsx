@@ -23,13 +23,13 @@ const Header = () => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8">
           <a href="#features" className="text-foreground hover:text-primary transition-colors">
-            תכונות
+            Features
           </a>
           <button 
             onClick={() => navigate('/pricing')}
             className="text-foreground hover:text-primary transition-colors"
           >
-            מחירים
+            Pricing
           </button>
           <a href="#demo" className="text-foreground hover:text-primary transition-colors">
             Demo
@@ -40,15 +40,15 @@ const Header = () => {
         <div className="hidden md:flex items-center gap-4">
           {user ? (
             <Button variant="hero" size="lg" onClick={() => navigate('/dashboard')}>
-              הדשבורד שלי
+              My Dashboard
             </Button>
           ) : (
             <>
               <Button variant="ghost" onClick={() => navigate('/auth')}>
-                התחבר
+                Sign In
               </Button>
               <Button variant="hero" size="lg" onClick={() => navigate('/auth')}>
-                התחל בחינם
+                Start Free
               </Button>
             </>
           )}
@@ -72,16 +72,16 @@ const Header = () => {
               className="text-foreground hover:text-primary transition-colors py-2"
               onClick={() => setIsMenuOpen(false)}
             >
-              תכונות
+              Features
             </a>
             <button 
               onClick={() => {
                 navigate('/pricing');
                 setIsMenuOpen(false);
               }}
-              className="text-foreground hover:text-primary transition-colors py-2 text-right"
+              className="text-foreground hover:text-primary transition-colors py-2 text-left"
             >
-              מחירים
+              Pricing
             </button>
             <a 
               href="#demo" 
@@ -93,15 +93,15 @@ const Header = () => {
             <div className="flex flex-col gap-3 pt-4 border-t border-border">
               {user ? (
                 <Button variant="hero" className="w-full" onClick={() => navigate('/dashboard')}>
-                  הדשבורד שלי
+                  My Dashboard
                 </Button>
               ) : (
                 <>
                   <Button variant="ghost" className="w-full" onClick={() => navigate('/auth')}>
-                    התחבר
+                    Sign In
                   </Button>
                   <Button variant="hero" className="w-full" onClick={() => navigate('/auth')}>
-                    התחל בחינם
+                    Start Free
                   </Button>
                 </>
               )}

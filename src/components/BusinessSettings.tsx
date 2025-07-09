@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Save, ExternalLink, Globe, Settings } from 'lucide-react';
@@ -54,8 +55,8 @@ const BusinessSettings = ({ business, onBusinessUpdate }: BusinessSettingsProps)
 
         if (existingBusiness) {
           toast({
-            title: "כתובת תפוסה",
-            description: "הכתובת הציבורית הזו כבר בשימוש. בחר כתובת אחרת.",
+            title: "Address Taken",
+            description: "This public address is already in use. Choose a different address.",
             variant: "destructive"
           });
           setIsSaving(false);
@@ -63,35 +64,37 @@ const BusinessSettings = ({ business, onBusinessUpdate }: BusinessSettingsProps)
         }
       }
 
-      const { data, error } = await supabase
+      const updateData = {
+        name: formData.name,
+        description: formData.description || null,
+        phone: formData.phone || null,
+        address: formData.address || null,
+        terms: formData.terms || null,
+        is_active: formData.is_active,
+        ...(newSlug !== business.slug && { slug: newSlug })
+      };
+
+      const { error } = await supabase
         .from('businesses')
-        .update({
-          name: formData.name,
-          description: formData.description || null,
-          phone: formData.phone || null,
-          address: formData.address || null,
-          terms: formData.terms || null,
-          is_active: formData.is_active,
-          slug: newSlug
-        })
-        .eq('id', business.id)
-        .select()
-        .single();
+        .update(updateData)
+        .eq('id', business.id);
 
       if (error) throw error;
 
-      onBusinessUpdate(data);
-      setIsSlugEditing(false);
-      
+      const updatedBusiness = { ...business, ...updateData };
+      onBusinessUpdate(updatedBusiness);
+
       toast({
-        title: "הגדרות נשמרו",
-        description: "פרטי העסק עודכנו בהצלחה"
+        title: "Settings Saved",
+        description: "Business details have been updated successfully"
       });
+
+      setIsSlugEditing(false);
     } catch (error) {
-      console.error('Error updating business:', error);
+      console.error('Error saving business settings:', error);
       toast({
-        title: "שגיאה",
-        description: "לא ניתן לשמור את השינויים",
+        title: "Error",
+        description: "Unable to save changes",
         variant: "destructive"
       });
     } finally {
@@ -99,210 +102,204 @@ const BusinessSettings = ({ business, onBusinessUpdate }: BusinessSettingsProps)
     }
   };
 
-  const generateSlugFromName = (name: string) => {
-    // Convert Hebrew/English to URL-friendly slug
+  const generateSlug = (name: string) => {
     return name
       .toLowerCase()
-      .trim()
-      .replace(/[^\w\s-]/g, '')
-      .replace(/[\s_-]+/g, '-')
-      .replace(/^-+|-+$/g, '');
+      .replace(/[^a-z0-9\s]/g, '')
+      .replace(/\s+/g, '-')
+      .slice(0, 50);
   };
 
-  const handleNameChange = (name: string) => {
-    setFormData(prev => ({ ...prev, name }));
-    
-    // Auto-generate slug if currently editing
-    if (isSlugEditing) {
-      const generatedSlug = generateSlugFromName(name);
-      setNewSlug(generatedSlug);
-    }
+  const handleSlugChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const slug = e.target.value
+      .toLowerCase()
+      .replace(/[^a-z0-9-]/g, '')
+      .slice(0, 50);
+    setNewSlug(slug);
   };
 
   return (
     <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-medium">הגדרות העסק</h3>
-        <p className="text-sm text-muted-foreground">
-          נהל את פרטי העסק והגדרות נוספות
-        </p>
-      </div>
-
-      {/* Basic Information */}
-      <Card>
+      <Card className="border-border/50">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Settings className="w-5 h-5" />
-            פרטי העסק
-          </CardTitle>
-          <CardDescription>
-            עדכן את המידע הבסיסי של העסק שלך
-          </CardDescription>
-        </CardHeader>
-        
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="name">שם העסק *</Label>
-            <Input
-              id="name"
-              value={formData.name}
-              onChange={(e) => handleNameChange(e.target.value)}
-              placeholder="שם העסק שלך"
-              required
-            />
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="description">תיאור העסק</Label>
-            <Textarea
-              id="description"
-              value={formData.description}
-              onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-              placeholder="תאר את העסק שלך..."
-              rows={3}
-            />
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="phone">טלפון</Label>
-              <Input
-                id="phone"
-                value={formData.phone}
-                onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                placeholder="052-123-4567"
-              />
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="flex items-center gap-2">
+                <Settings className="w-5 h-5" />
+                Business Settings
+              </CardTitle>
+              <CardDescription>
+                Manage your business details and additional settings
+              </CardDescription>
             </div>
+            <Button onClick={handleSave} disabled={isSaving}>
+              <Save className="w-4 h-4 mr-2" />
+              {isSaving ? 'Saving...' : 'Save Changes'}
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {/* Business Details */}
+          <div>
+            <h4 className="font-medium mb-4">Business Details</h4>
+            <p className="text-sm text-muted-foreground mb-6">
+              Update your business basic information
+            </p>
             
-            <div className="space-y-2">
-              <Label htmlFor="address">כתובת</Label>
-              <Input
-                id="address"
-                value={formData.address}
-                onChange={(e) => setFormData(prev => ({ ...prev, address: e.target.value }))}
-                placeholder="תל אביב, ישראל"
-              />
-            </div>
-          </div>
-          
-          <div className="space-y-2">
-            <Label htmlFor="terms">תנאי התורים</Label>
-            <Textarea
-              id="terms"
-              value={formData.terms}
-              onChange={(e) => setFormData(prev => ({ ...prev, terms: e.target.value }))}
-              placeholder="הזן תנאים מיוחדים, מדיניות ביטול וכו'..."
-              rows={4}
-            />
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Public URL */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Globe className="w-5 h-5" />
-            כתובת ציבורית
-          </CardTitle>
-          <CardDescription>
-            הכתובת שבה לקוחות יוכלו לגשת לעסק שלך
-          </CardDescription>
-        </CardHeader>
-        
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label>הכתובת הנוכחית</Label>
-            <div className="flex items-center gap-2">
-              <div className="flex-1 p-2 bg-muted rounded border text-sm">
-                mytor.app/{business.slug}
-              </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => window.open(`/${business.slug}`, '_blank')}
-              >
-                <ExternalLink className="w-4 h-4" />
-              </Button>
-            </div>
-          </div>
-          
-          {isSlugEditing ? (
-            <div className="space-y-3">
-              <Label htmlFor="slug">כתובת חדשה</Label>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">mytor.app/</span>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="name">Business Name *</Label>
                 <Input
-                  id="slug"
-                  value={newSlug}
-                  onChange={(e) => setNewSlug(e.target.value)}
-                  placeholder="my-business"
-                  className="flex-1"
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                  placeholder="Your business name"
+                  required
                 />
               </div>
-              <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    setNewSlug(business.slug);
-                    setIsSlugEditing(false);
-                  }}
-                >
-                  ביטול
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={() => setIsSlugEditing(false)}
-                  disabled={!newSlug || newSlug === business.slug}
-                >
-                  אישור
-                </Button>
+
+              <div>
+                <Label htmlFor="description">Business Description</Label>
+                <Textarea
+                  id="description"
+                  value={formData.description}
+                  onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                  placeholder="Describe your business..."
+                  rows={4}
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="phone">Phone</Label>
+                  <Input
+                    id="phone"
+                    value={formData.phone}
+                    onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                    placeholder="050-1234567"
+                    dir="ltr"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="address">Address</Label>
+                  <Input
+                    id="address"
+                    value={formData.address}
+                    onChange={(e) => setFormData(prev => ({ ...prev, address: e.target.value }))}
+                    placeholder="Tel Aviv, Israel"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="terms">Appointment Terms</Label>
+                <Textarea
+                  id="terms"
+                  value={formData.terms}
+                  onChange={(e) => setFormData(prev => ({ ...prev, terms: e.target.value }))}
+                  placeholder="Enter special terms, cancellation policy, etc..."
+                  rows={3}
+                />
               </div>
             </div>
-          ) : (
-            <Button
-              variant="outline"
-              onClick={() => setIsSlugEditing(true)}
-            >
-              שנה כתובת
-            </Button>
-          )}
-        </CardContent>
-      </Card>
+          </div>
 
-      {/* Business Status */}
-      <Card>
-        <CardHeader>
-          <CardTitle>סטטוס העסק</CardTitle>
-          <CardDescription>
-            קבע האם העסק פעיל וזמין לקבלת תורים חדשים
-          </CardDescription>
-        </CardHeader>
-        
-        <CardContent>
-          <div className="flex items-center justify-between">
-            <div className="space-y-1">
-              <p className="font-medium">העסק פעיל</p>
-              <p className="text-sm text-muted-foreground">
-                כאשר העסק לא פעיל, לקוחות לא יוכלו לקבוע תורים חדשים
-              </p>
+          {/* Public Address */}
+          <div className="border-t pt-6">
+            <h4 className="font-medium mb-4">Public Address</h4>
+            <p className="text-sm text-muted-foreground mb-6">
+              The address where clients can access your business
+            </p>
+            
+            <div className="space-y-4">
+              <div>
+                <Label>Current Address</Label>
+                <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
+                  <Globe className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-sm">mytor.app/{business.slug}</span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => window.open(`/${business.slug}`, '_blank')}
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+
+              <Dialog open={isSlugEditing} onOpenChange={setIsSlugEditing}>
+                <DialogTrigger asChild>
+                  <Button variant="outline">
+                    Change Address
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Change Public Address</DialogTitle>
+                    <DialogDescription>
+                      Choose a new address for your business public page
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4">
+                    <div>
+                      <Label htmlFor="slug">New Address</Label>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-muted-foreground whitespace-nowrap">mytor.app/</span>
+                        <Input
+                          id="slug"
+                          value={newSlug}
+                          onChange={handleSlugChange}
+                          placeholder="my-business"
+                          className="flex-1"
+                          dir="ltr"
+                        />
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Only English letters, numbers, and hyphens allowed
+                      </p>
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    <Button variant="outline" onClick={() => {
+                      setNewSlug(business.slug);
+                      setIsSlugEditing(false);
+                    }}>
+                      Cancel
+                    </Button>
+                    <Button onClick={() => {
+                      setIsSlugEditing(false);
+                      // The actual save will happen when user clicks main save button
+                    }}>
+                      Confirm
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </div>
-            <Switch
-              checked={formData.is_active}
-              onCheckedChange={(checked) => setFormData(prev => ({ ...prev, is_active: checked }))}
-            />
+          </div>
+
+          {/* Business Status */}
+          <div className="border-t pt-6">
+            <h4 className="font-medium mb-4">Business Status</h4>
+            <p className="text-sm text-muted-foreground mb-6">
+              Set whether the business is active and available for new appointments
+            </p>
+            
+            <div className="flex items-center space-x-3">
+              <Switch
+                checked={formData.is_active}
+                onCheckedChange={(checked) => setFormData(prev => ({ ...prev, is_active: checked }))}
+              />
+              <div>
+                <p className="font-medium">Business Active</p>
+                <p className="text-sm text-muted-foreground">
+                  When inactive, clients cannot book new appointments
+                </p>
+              </div>
+            </div>
           </div>
         </CardContent>
       </Card>
-
-      {/* Save Button */}
-      <div className="flex justify-end">
-        <Button onClick={handleSave} disabled={isSaving}>
-          <Save className="w-4 h-4 ml-2" />
-          {isSaving ? 'שומר...' : 'שמור שינויים'}
-        </Button>
-      </div>
     </div>
   );
 };

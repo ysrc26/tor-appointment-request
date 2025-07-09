@@ -85,7 +85,7 @@ const PublicBooking = () => {
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/10 flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-muted-foreground">טוען...</p>
+          <p className="text-muted-foreground">Loading...</p>
         </div>
       </div>
     );
@@ -98,12 +98,12 @@ const PublicBooking = () => {
           <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
             <Calendar className="w-8 h-8 text-muted-foreground" />
           </div>
-          <h1 className="text-2xl font-bold text-foreground mb-2">העסק לא נמצא</h1>
+          <h1 className="text-2xl font-bold text-foreground mb-2">Business Not Found</h1>
           <p className="text-muted-foreground mb-4">
-            העסק שחיפשת לא קיים או לא פעיל כרגע
+            The business you're looking for doesn't exist or is not currently active
           </p>
           <Button onClick={() => window.location.href = '/'}>
-            חזרה לעמוד הבית
+            Back to Home
           </Button>
         </div>
       </div>
@@ -165,22 +165,22 @@ const PublicBooking = () => {
             {services.length === 0 ? (
               <div className="text-center py-8">
                 <Star className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                <h4 className="text-lg font-medium mb-2">אין שירותים זמינים כרגע</h4>
+                <h4 className="text-lg font-medium mb-2">No Services Available</h4>
                 <p className="text-muted-foreground text-sm">
-                  העסק עדיין מגדיר את השירותים. אנא נסה שוב מאוחר יותר.
+                  The business is still setting up services. Please try again later.
                 </p>
               </div>
             ) : (
               <>
                 <div className="space-y-3 mb-6">
-                  <h4 className="font-semibold text-foreground">השירותים הזמינים:</h4>
+                  <h4 className="font-semibold text-foreground">Available Services:</h4>
                   {services.map((service) => (
                     <div key={service.id} className="flex justify-between items-center p-3 bg-accent/30 rounded-lg">
                       <div>
                         <span className="font-medium text-foreground">{service.name}</span>
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
                           <Clock className="w-3 h-3" />
-                          <span>{service.duration_minutes} דקות</span>
+                          <span>{service.duration_minutes} minutes</span>
                         </div>
                       </div>
                       {service.price && (
@@ -192,7 +192,7 @@ const PublicBooking = () => {
 
                 {/* Available Times Preview */}
                 <div className="mb-6">
-                  <h4 className="font-semibold text-foreground mb-3">זמינות השבוע:</h4>
+                  <h4 className="font-semibold text-foreground mb-3">Weekly Availability:</h4>
                   <div className="grid grid-cols-3 gap-2">
                     {[
                       "10:00", "11:30", "14:00", 
@@ -211,11 +211,11 @@ const PublicBooking = () => {
                 {/* CTA Button */}
                 <Button variant="hero" className="w-full mb-4">
                   <Calendar className="w-4 h-4" />
-                  בקשת תור
+                  Request Appointment
                 </Button>
 
                 <p className="text-xs text-center text-muted-foreground">
-                  נדרש אימות SMS • מענה תוך שעתיים
+                  SMS verification required • Response within 2 hours
                 </p>
               </>
             )}
@@ -223,7 +223,7 @@ const PublicBooking = () => {
             {/* Terms Section */}
             {business.terms && (
               <div className="mt-6 pt-6 border-t border-border/30">
-                <h4 className="font-semibold text-foreground mb-2">תנאי התורים</h4>
+                <h4 className="font-semibold text-foreground mb-2">Appointment Terms</h4>
                 <p className="text-xs text-muted-foreground">
                   {business.terms}
                 </p>

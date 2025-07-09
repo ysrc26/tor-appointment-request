@@ -103,16 +103,16 @@ export const useAuthState = () => {
 
       if (error) {
         toast({
-          title: "שגיאה ברישום",
+          title: "Registration Error",
           description: error.message === 'User already registered' 
-            ? "המשתמש כבר רשום במערכת" 
-            : "אירעה שגיאה בהרשמה. נסה שוב.",
+            ? "User is already registered in the system" 
+            : "An error occurred during registration. Please try again.",
           variant: "destructive"
         });
       } else {
         toast({
-          title: "נרשמת בהצלחה!",
-          description: "בדוק את האימייל שלך לאישור החשבון",
+          title: "Registered Successfully!",
+          description: "Check your email to confirm your account",
         });
       }
 
@@ -132,16 +132,16 @@ export const useAuthState = () => {
 
       if (error) {
         toast({
-          title: "שגיאה בהתחברות",
+          title: "Login Error",
           description: error.message === 'Invalid login credentials'
-            ? "פרטי התחברות שגויים"
-            : "אירעה שגיאה בהתחברות. נסה שוב.",
+            ? "Invalid login credentials"
+            : "A login error occurred. Please try again.",
           variant: "destructive"
         });
       } else {
         toast({
-          title: "התחברת בהצלחה!",
-          description: "ברוך הבא ל-MyTor",
+          title: "Logged In Successfully!",
+          description: "Welcome to MyTor",
         });
       }
 
@@ -157,14 +157,14 @@ export const useAuthState = () => {
       const { error } = await supabase.auth.signOut();
       if (error) {
         toast({
-          title: "שגיאה ביציאה",
-          description: "אירעה שגיאה ביציאה מהמערכת",
+          title: "Logout Error",
+          description: "An error occurred while logging out",
           variant: "destructive"
         });
       } else {
         toast({
-          title: "יצאת מהמערכת",
-          description: "להתראות!",
+          title: "Logged Out",
+          description: "Goodbye!",
         });
       }
     } catch (error) {
@@ -185,14 +185,14 @@ export const useAuthState = () => {
 
       if (error) {
         toast({
-          title: "שגיאה בעדכון פרופיל",
-          description: "אירעה שגיאה בעדכון הפרופיל",
+          title: "Profile Update Error",
+          description: "An error occurred while updating the profile",
           variant: "destructive"
         });
       } else {
         toast({
-          title: "הפרופיל עודכן בהצלחה",
-          description: "השינויים נשמרו",
+          title: "Profile Updated Successfully",
+          description: "Changes have been saved",
         });
         // Refresh user profile
         fetchUserProfile(user.id);
