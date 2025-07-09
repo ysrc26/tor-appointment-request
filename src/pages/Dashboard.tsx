@@ -284,7 +284,7 @@ const Dashboard = () => {
                 <Button 
                   className="w-full" 
                   variant="outline"
-                  onClick={() => businesses.length > 0 && navigate(`/business/${businesses[0].id}`)}
+                  onClick={() => businesses.length > 0 && navigate(`/business/${businesses[0].id}/settings`)}
                   disabled={businesses.length === 0}
                 >
                   <Settings className="w-4 h-4 mr-2" />

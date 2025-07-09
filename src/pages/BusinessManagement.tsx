@@ -39,6 +39,8 @@ const BusinessManagement = () => {
       setActiveTab('appointments');
     } else if (path.includes('/clients')) {
       setActiveTab('clients');
+    } else if (path.includes('/settings')) {
+      setActiveTab('settings');
     } else {
       setActiveTab('overview');
     }
