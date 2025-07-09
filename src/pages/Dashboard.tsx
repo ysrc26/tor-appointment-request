@@ -81,47 +81,48 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/10">
       {/* Header */}
       <header className="border-b border-border/50 bg-background/80 backdrop-blur-sm">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+        <div className="container mx-auto px-3 sm:px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-gradient-hero rounded-lg flex items-center justify-center">
               <Calendar className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-bold text-foreground">MyTor</span>
+            <span className="text-lg sm:text-xl font-bold text-foreground">MyTor</span>
           </div>
           
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-muted-foreground hidden sm:block">
+          <div className="flex items-center gap-2 sm:gap-4">
+            <span className="text-xs sm:text-sm text-muted-foreground hidden md:block max-w-32 sm:max-w-none truncate">
               Hello, {userProfile?.full_name || user.email}
             </span>
-            <Button variant="ghost" size="sm" onClick={handleSignOut}>
+            <Button variant="ghost" size="sm" onClick={handleSignOut} className="h-8 w-8 sm:h-9 sm:w-auto sm:px-3">
               <LogOut className="w-4 h-4" />
+              <span className="hidden sm:inline ml-2">Sign Out</span>
             </Button>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
         {/* Welcome Section */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
             Welcome to Your Dashboard
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-sm sm:text-base text-muted-foreground">
             Manage your business, appointments, and clients in one place
           </p>
         </div>
 
         {/* Subscription Status */}
         {limits && (
-          <Card className="border-border/50 bg-muted/30 mb-8">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Crown className="w-5 h-5 text-primary" />
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium">{getSubscriptionTierLabel(limits.subscription_tier)} Subscription</span>
-                      <Badge variant="outline">
+          <Card className="border-border/50 bg-muted/30 mb-6 sm:mb-8">
+            <CardContent className="p-3 sm:p-4">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <Crown className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0" />
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                      <span className="font-medium text-sm sm:text-base">{getSubscriptionTierLabel(limits.subscription_tier)} Subscription</span>
+                      <Badge variant="outline" className="text-xs w-fit">
                         {limits.appointments_used}/{limits.appointments_limit} appointments
                       </Badge>
                     </div>
@@ -131,8 +132,8 @@ const Dashboard = () => {
                   </div>
                 </div>
                 {limits.subscription_tier === 'free' && (
-                  <Button variant="hero" size="sm" onClick={() => navigate('/pricing')}>
-                    Upgrade Subscription
+                  <Button variant="hero" size="sm" onClick={() => navigate('/pricing')} className="text-xs sm:text-sm">
+                    Upgrade
                   </Button>
                 )}
               </div>
@@ -142,12 +143,14 @@ const Dashboard = () => {
 
         {/* Businesses Section */}
         {!businessesLoading && (
-          <div className="mb-8">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-foreground">My Businesses</h2>
+          <div className="mb-6 sm:mb-8">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0 mb-4 sm:mb-6">
+              <h2 className="text-xl sm:text-2xl font-bold text-foreground">My Businesses</h2>
               <Button 
                 onClick={() => navigate('/business/setup')}
                 variant="hero"
+                size="sm"
+                className="w-full sm:w-auto"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Add New Business
@@ -175,24 +178,24 @@ const Dashboard = () => {
                 </CardContent>
               </Card>
             ) : (
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                 {businesses.map((business) => (
                   <Card key={business.id} className="border-border/50 hover:shadow-medium transition-all duration-200 hover:border-primary/20">
-                    <CardHeader className="pb-4">
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <CardTitle className="text-lg mb-1">{business.name}</CardTitle>
-                          <CardDescription className="flex items-center gap-1">
-                            <ExternalLink className="w-3 h-3" />
-                            mytor.app/{business.slug}
+                    <CardHeader className="pb-3 sm:pb-4">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0 flex-1">
+                          <CardTitle className="text-base sm:text-lg mb-1 truncate">{business.name}</CardTitle>
+                          <CardDescription className="flex items-center gap-1 text-xs sm:text-sm">
+                            <ExternalLink className="w-3 h-3 flex-shrink-0" />
+                            <span className="truncate">mytor.app/{business.slug}</span>
                           </CardDescription>
                         </div>
-                        <div className={`w-2 h-2 rounded-full ${business.is_active ? 'bg-green-500' : 'bg-gray-400'}`} />
+                        <div className={`w-2 h-2 rounded-full flex-shrink-0 ${business.is_active ? 'bg-green-500' : 'bg-gray-400'}`} />
                       </div>
                     </CardHeader>
                     <CardContent>
                       {business.description && (
-                        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                        <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4 line-clamp-2">
                           {business.description}
                         </p>
                       )}
@@ -203,13 +206,15 @@ const Dashboard = () => {
                           size="sm"
                           onClick={() => navigate(`/business/${business.id}`)}
                         >
-                          <Settings className="w-4 h-4 mr-2" />
-                          Manage
+                          <Settings className="w-4 h-4 mr-1 sm:mr-2" />
+                          <span className="hidden sm:inline">Manage</span>
+                          <span className="sm:hidden">Mgmt</span>
                         </Button>
                         <Button 
                           variant="outline" 
                           size="sm"
                           onClick={() => window.open(`/${business.slug}`, '_blank')}
+                          className="px-2 sm:px-3"
                         >
                           <ExternalLink className="w-4 h-4" />
                         </Button>
@@ -224,7 +229,7 @@ const Dashboard = () => {
 
         {/* Quick Actions - Only show if user has businesses */}
         {businesses.length > 0 && (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-8">
+          <div className="grid gap-3 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-6 sm:mb-8">
             <Card className="border-border/50 hover:shadow-medium transition-all duration-200 hover:border-primary/20">
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
@@ -302,39 +307,39 @@ const Dashboard = () => {
         </div>
 
         {/* Statistics Cards */}
-        <div className="grid gap-6 md:grid-cols-4 mb-8">
+        <div className="grid gap-3 sm:gap-6 grid-cols-2 sm:grid-cols-4 mb-6 sm:mb-8">
           <Card className="border-border/50">
-            <CardContent className="p-6">
+            <CardContent className="p-3 sm:p-6">
               <div className="text-center">
-                <div className="text-2xl font-bold text-foreground">0</div>
-                <div className="text-sm text-muted-foreground">Today's Appointments</div>
+                <div className="text-lg sm:text-2xl font-bold text-foreground">0</div>
+                <div className="text-xs sm:text-sm text-muted-foreground">Today's Appointments</div>
               </div>
             </CardContent>
           </Card>
 
           <Card className="border-border/50">
-            <CardContent className="p-6">
+            <CardContent className="p-3 sm:p-6">
               <div className="text-center">
-                <div className="text-2xl font-bold text-foreground">0</div>
-                <div className="text-sm text-muted-foreground">This Week</div>
+                <div className="text-lg sm:text-2xl font-bold text-foreground">0</div>
+                <div className="text-xs sm:text-sm text-muted-foreground">This Week</div>
               </div>
             </CardContent>
           </Card>
 
           <Card className="border-border/50">
-            <CardContent className="p-6">
+            <CardContent className="p-3 sm:p-6">
               <div className="text-center">
-                <div className="text-2xl font-bold text-foreground">0</div>
-                <div className="text-sm text-muted-foreground">Clients</div>
+                <div className="text-lg sm:text-2xl font-bold text-foreground">0</div>
+                <div className="text-xs sm:text-sm text-muted-foreground">Clients</div>
               </div>
             </CardContent>
           </Card>
 
           <Card className="border-border/50">
-            <CardContent className="p-6">
+            <CardContent className="p-3 sm:p-6">
               <div className="text-center">
-                <div className="text-2xl font-bold text-foreground">0</div>
-                <div className="text-sm text-muted-foreground">Services</div>
+                <div className="text-lg sm:text-2xl font-bold text-foreground">0</div>
+                <div className="text-xs sm:text-sm text-muted-foreground">Services</div>
               </div>
             </CardContent>
           </Card>

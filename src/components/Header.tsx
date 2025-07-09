@@ -11,43 +11,43 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+      <div className="container mx-auto px-3 sm:px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-gradient-hero rounded-lg flex items-center justify-center">
             <Calendar className="w-5 h-5 text-white" />
           </div>
-          <span className="text-xl font-bold text-foreground">MyTor</span>
+          <span className="text-lg sm:text-xl font-bold text-foreground">MyTor</span>
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
-          <a href="#features" className="text-foreground hover:text-primary transition-colors">
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+          <a href="#features" className="text-sm text-foreground hover:text-primary transition-colors">
             Features
           </a>
           <button 
             onClick={() => navigate('/pricing')}
-            className="text-foreground hover:text-primary transition-colors"
+            className="text-sm text-foreground hover:text-primary transition-colors"
           >
             Pricing
           </button>
-          <a href="#demo" className="text-foreground hover:text-primary transition-colors">
+          <a href="#demo" className="text-sm text-foreground hover:text-primary transition-colors">
             Demo
           </a>
         </nav>
 
         {/* Desktop CTA */}
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-2 lg:gap-4">
           {user ? (
-            <Button variant="hero" size="lg" onClick={() => navigate('/dashboard')}>
-              My Dashboard
+            <Button variant="hero" size="sm" onClick={() => navigate('/dashboard')} className="text-sm">
+              Dashboard
             </Button>
           ) : (
             <>
-              <Button variant="ghost" onClick={() => navigate('/auth')}>
+              <Button variant="ghost" size="sm" onClick={() => navigate('/auth')} className="text-sm">
                 Sign In
               </Button>
-              <Button variant="hero" size="lg" onClick={() => navigate('/auth')}>
+              <Button variant="hero" size="sm" onClick={() => navigate('/auth')} className="text-sm">
                 Start Free
               </Button>
             </>
@@ -66,10 +66,10 @@ const Header = () => {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-background border-b border-border">
-          <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
+          <nav className="container mx-auto px-3 sm:px-4 py-4 flex flex-col gap-3">
             <a 
               href="#features" 
-              className="text-foreground hover:text-primary transition-colors py-2"
+              className="text-foreground hover:text-primary transition-colors py-2 text-sm"
               onClick={() => setIsMenuOpen(false)}
             >
               Features
@@ -79,28 +79,28 @@ const Header = () => {
                 navigate('/pricing');
                 setIsMenuOpen(false);
               }}
-              className="text-foreground hover:text-primary transition-colors py-2 text-left"
+              className="text-foreground hover:text-primary transition-colors py-2 text-left text-sm"
             >
               Pricing
             </button>
             <a 
               href="#demo" 
-              className="text-foreground hover:text-primary transition-colors py-2"
+              className="text-foreground hover:text-primary transition-colors py-2 text-sm"
               onClick={() => setIsMenuOpen(false)}
             >
               Demo
             </a>
-            <div className="flex flex-col gap-3 pt-4 border-t border-border">
+            <div className="flex flex-col gap-2 pt-3 border-t border-border">
               {user ? (
-                <Button variant="hero" className="w-full" onClick={() => navigate('/dashboard')}>
+                <Button variant="hero" className="w-full" size="sm" onClick={() => navigate('/dashboard')}>
                   My Dashboard
                 </Button>
               ) : (
                 <>
-                  <Button variant="ghost" className="w-full" onClick={() => navigate('/auth')}>
+                  <Button variant="ghost" className="w-full" size="sm" onClick={() => navigate('/auth')}>
                     Sign In
                   </Button>
-                  <Button variant="hero" className="w-full" onClick={() => navigate('/auth')}>
+                  <Button variant="hero" className="w-full" size="sm" onClick={() => navigate('/auth')}>
                     Start Free
                   </Button>
                 </>

@@ -66,68 +66,68 @@ const PricingSection = () => {
   ];
 
   return (
-    <section id="pricing" className="py-20">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">
+    <section id="pricing" className="py-12 sm:py-20">
+      <div className="container mx-auto px-3 sm:px-4">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6">
             Simple, Transparent Pricing
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-base sm:text-xl text-muted-foreground max-w-3xl mx-auto px-2">
             Start free and upgrade when you're ready. No hidden fees, no surprises.
             Perfect for Israeli small businesses.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto">
           {plans.map((plan, index) => (
             <Card 
               key={index}
-              className={`relative p-8 ${
+              className={`relative p-4 sm:p-6 lg:p-8 ${
                 plan.popular 
-                  ? 'border-2 border-primary shadow-large scale-105' 
+                  ? 'border-2 border-primary shadow-large sm:scale-105' 
                   : 'border border-border shadow-soft hover:shadow-medium'
               } transition-all duration-300 hover:scale-[1.02] bg-gradient-card`}
             >
               {plan.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <div className="bg-gradient-hero text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2">
-                    <Star className="w-4 h-4" />
+                <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-gradient-hero text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold flex items-center gap-1 sm:gap-2">
+                    <Star className="w-3 h-3 sm:w-4 sm:h-4" />
                     Most Popular
                   </div>
                 </div>
               )}
 
               {plan.name === "Business" && (
-                <div className="absolute top-6 right-6">
-                  <Crown className="w-6 h-6 text-primary" />
+                <div className="absolute top-4 sm:top-6 right-4 sm:right-6">
+                  <Crown className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                 </div>
               )}
 
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-foreground mb-2">
+              <div className="text-center mb-6 sm:mb-8">
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground mb-2">
                   {plan.name}
                 </h3>
-                <div className="mb-4">
-                  <span className="text-4xl font-bold text-primary">{plan.price}</span>
-                  <span className="text-muted-foreground ml-2">/{plan.period}</span>
+                <div className="mb-3 sm:mb-4">
+                  <span className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary">{plan.price}</span>
+                  <span className="text-muted-foreground ml-1 sm:ml-2 text-sm sm:text-base">/{plan.period}</span>
                 </div>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground text-sm sm:text-base">
                   {plan.description}
                 </p>
               </div>
 
-              <div className="space-y-4 mb-8">
+              <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
                 {plan.features.map((feature, featureIndex) => (
-                  <div key={featureIndex} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
-                    <span className="text-foreground">{feature}</span>
+                  <div key={featureIndex} className="flex items-start gap-2 sm:gap-3">
+                    <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-secondary mt-0.5 flex-shrink-0" />
+                    <span className="text-foreground text-sm sm:text-base">{feature}</span>
                   </div>
                 ))}
                 
                 {plan.limitations.map((limitation, limitIndex) => (
-                  <div key={limitIndex} className="flex items-start gap-3 opacity-60">
-                    <div className="w-5 h-5 rounded-full border-2 border-muted-foreground mt-0.5 flex-shrink-0"></div>
-                    <span className="text-muted-foreground text-sm">{limitation}</span>
+                  <div key={limitIndex} className="flex items-start gap-2 sm:gap-3 opacity-60">
+                    <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 border-muted-foreground mt-0.5 flex-shrink-0"></div>
+                    <span className="text-muted-foreground text-xs sm:text-sm">{limitation}</span>
                   </div>
                 ))}
               </div>
@@ -141,7 +141,7 @@ const PricingSection = () => {
               </Button>
 
               {plan.name === "Personal Premium" && (
-                <p className="text-center text-sm text-muted-foreground mt-4">
+                <p className="text-center text-xs sm:text-sm text-muted-foreground mt-3 sm:mt-4">
                   7-day free trial • Cancel anytime
                 </p>
               )}
@@ -150,11 +150,11 @@ const PricingSection = () => {
         </div>
 
         {/* FAQ or additional info */}
-        <div className="text-center mt-16">
-          <p className="text-muted-foreground mb-4">
+        <div className="text-center mt-12 sm:mt-16 px-4">
+          <p className="text-muted-foreground mb-3 sm:mb-4 text-sm sm:text-base">
             All plans include SMS verification, mobile optimization, and basic support.
           </p>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-xs sm:text-sm text-muted-foreground">
             Need a custom solution? <span className="text-primary font-medium cursor-pointer hover:underline">Contact our team</span>
           </p>
         </div>

@@ -63,25 +63,25 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/10 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/10 flex items-center justify-center p-3 sm:p-4">
+      <div className="w-full max-w-sm sm:max-w-md">
         {/* Logo */}
-        <div className="flex items-center justify-center gap-2 mb-8">
-          <div className="w-10 h-10 bg-gradient-hero rounded-lg flex items-center justify-center">
-            <Calendar className="w-6 h-6 text-white" />
+        <div className="flex items-center justify-center gap-2 mb-6 sm:mb-8">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-hero rounded-lg flex items-center justify-center">
+            <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </div>
-          <span className="text-2xl font-bold text-foreground">MyTor</span>
+          <span className="text-xl sm:text-2xl font-bold text-foreground">MyTor</span>
         </div>
 
         {/* Referral Bonus Message */}
         {showReferralBonus && (
-          <Card className="border-green-200 bg-green-50 dark:bg-green-950 dark:border-green-800 mb-4">
-            <CardContent className="p-4">
+          <Card className="border-green-200 bg-green-50 dark:bg-green-950 dark:border-green-800 mb-3 sm:mb-4">
+            <CardContent className="p-3 sm:p-4">
               <div className="text-center">
-                <div className="text-green-700 dark:text-green-300 font-medium mb-1">
+                <div className="text-green-700 dark:text-green-300 font-medium mb-1 text-sm sm:text-base">
                   🎉 Special Referral Bonus!
                 </div>
-                <div className="text-sm text-green-600 dark:text-green-400">
+                <div className="text-xs sm:text-sm text-green-600 dark:text-green-400">
                   Sign up now and get 1 month Premium subscription completely free!
                 </div>
               </div>
@@ -90,24 +90,24 @@ const Auth = () => {
         )}
 
         <Card className="border-border/50 shadow-large">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl">Welcome</CardTitle>
-            <CardDescription>
+          <CardHeader className="text-center pb-4 sm:pb-6">
+            <CardTitle className="text-xl sm:text-2xl">Welcome</CardTitle>
+            <CardDescription className="text-sm sm:text-base">
               {showReferralBonus 
                 ? "You've been invited to join MyTor with a special bonus!"
                 : "Sign in or register to start managing your business"
               }
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-4 sm:px-6">
             <Tabs defaultValue="signin" className="w-full">
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="signin">Sign In</TabsTrigger>
                 <TabsTrigger value="signup">Sign Up</TabsTrigger>
               </TabsList>
 
-              <TabsContent value="signin" className="space-y-4 mt-6">
-                <form onSubmit={handleSignIn} className="space-y-4">
+              <TabsContent value="signin" className="space-y-3 sm:space-y-4 mt-4 sm:mt-6">
+                <form onSubmit={handleSignIn} className="space-y-3 sm:space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="signin-email">Email</Label>
                     <div className="relative">
@@ -150,8 +150,8 @@ const Auth = () => {
                 </form>
               </TabsContent>
 
-              <TabsContent value="signup" className="space-y-4 mt-6">
-                <form onSubmit={handleSignUp} className="space-y-4">
+              <TabsContent value="signup" className="space-y-3 sm:space-y-4 mt-4 sm:mt-6">
+                <form onSubmit={handleSignUp} className="space-y-3 sm:space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="signup-fullname">Full Name</Label>
                     <div className="relative">
@@ -227,7 +227,7 @@ const Auth = () => {
           </CardContent>
         </Card>
 
-        <div className="text-center mt-6 text-sm text-muted-foreground">
+        <div className="text-center mt-4 sm:mt-6 text-xs sm:text-sm text-muted-foreground px-2">
           <p>By signing up you agree to our Terms of Service and Privacy Policy</p>
         </div>
       </div>
