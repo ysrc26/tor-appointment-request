@@ -235,7 +235,12 @@ const Dashboard = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                <Button className="w-full" variant="outline">
+                <Button 
+                  className="w-full" 
+                  variant="outline"
+                  onClick={() => businesses.length > 0 && navigate(`/business/${businesses[0].id}/appointments`)}
+                  disabled={businesses.length === 0}
+                >
                   <Calendar className="w-4 h-4 mr-2" />
                   View Appointments
                 </Button>
@@ -253,7 +258,12 @@ const Dashboard = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                <Button className="w-full" variant="outline">
+                <Button 
+                  className="w-full" 
+                  variant="outline"
+                  onClick={() => businesses.length > 0 && navigate(`/business/${businesses[0].id}/clients`)}
+                  disabled={businesses.length === 0}
+                >
                   <Users className="w-4 h-4 mr-2" />
                   View Clients
                 </Button>
@@ -271,7 +281,12 @@ const Dashboard = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                <Button className="w-full" variant="outline">
+                <Button 
+                  className="w-full" 
+                  variant="outline"
+                  onClick={() => businesses.length > 0 && navigate(`/business/${businesses[0].id}`)}
+                  disabled={businesses.length === 0}
+                >
                   <Settings className="w-4 h-4 mr-2" />
                   Business Settings
                 </Button>
