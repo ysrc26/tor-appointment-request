@@ -65,46 +65,46 @@ const Auth = () => {
 
         <Card className="border-border/50 shadow-large">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl">ברוכים הבאים</CardTitle>
+            <CardTitle className="text-2xl">Welcome</CardTitle>
             <CardDescription>
-              התחבר או הירשם כדי להתחיל לנהל את העסק שלך
+              Sign in or register to start managing your business
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="signin" className="w-full">
               <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="signin">התחברות</TabsTrigger>
-                <TabsTrigger value="signup">הרשמה</TabsTrigger>
+                <TabsTrigger value="signin">Sign In</TabsTrigger>
+                <TabsTrigger value="signup">Sign Up</TabsTrigger>
               </TabsList>
 
               <TabsContent value="signin" className="space-y-4 mt-6">
                 <form onSubmit={handleSignIn} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="signin-email">אימייל</Label>
+                    <Label htmlFor="signin-email">Email</Label>
                     <div className="relative">
-                      <Mail className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                       <Input
                         id="signin-email"
                         name="email"
                         type="email"
                         placeholder="your@email.com"
                         required
-                        className="pr-10"
+                        className="pl-10"
                         dir="ltr"
                       />
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signin-password">סיסמה</Label>
+                    <Label htmlFor="signin-password">Password</Label>
                     <div className="relative">
-                      <Lock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                       <Input
                         id="signin-password"
                         name="password"
                         type="password"
                         placeholder="••••••••"
                         required
-                        className="pr-10"
+                        className="pl-10"
                         dir="ltr"
                       />
                     </div>
@@ -115,8 +115,8 @@ const Auth = () => {
                     disabled={isLoading}
                     variant="hero"
                   >
-                    {isLoading ? 'מתחבר...' : 'התחבר'}
-                    <ArrowRight className="w-4 h-4 mr-2" />
+                    {isLoading ? 'Signing In...' : 'Sign In'}
+                    <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </form>
               </TabsContent>
@@ -124,53 +124,53 @@ const Auth = () => {
               <TabsContent value="signup" className="space-y-4 mt-6">
                 <form onSubmit={handleSignUp} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="signup-fullname">שם מלא</Label>
+                    <Label htmlFor="signup-fullname">Full Name</Label>
                     <div className="relative">
-                      <User className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                       <Input
                         id="signup-fullname"
                         name="fullName"
                         type="text"
-                        placeholder="שם מלא"
+                        placeholder="Full Name"
                         required
-                        className="pr-10"
+                        className="pl-10"
                       />
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signup-phone">טלפון</Label>
+                    <Label htmlFor="signup-phone">Phone</Label>
                     <div className="relative">
-                      <Phone className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                      <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                       <Input
                         id="signup-phone"
                         name="phone"
                         type="tel"
                         placeholder="050-1234567"
                         required
-                        className="pr-10"
+                        className="pl-10"
                         dir="ltr"
                       />
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signup-email">אימייל</Label>
+                    <Label htmlFor="signup-email">Email</Label>
                     <div className="relative">
-                      <Mail className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                       <Input
                         id="signup-email"
                         name="email"
                         type="email"
                         placeholder="your@email.com"
                         required
-                        className="pr-10"
+                        className="pl-10"
                         dir="ltr"
                       />
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signup-password">סיסמה</Label>
+                    <Label htmlFor="signup-password">Password</Label>
                     <div className="relative">
-                      <Lock className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                       <Input
                         id="signup-password"
                         name="password"
@@ -178,7 +178,7 @@ const Auth = () => {
                         placeholder="••••••••"
                         required
                         minLength={6}
-                        className="pr-10"
+                        className="pl-10"
                         dir="ltr"
                       />
                     </div>
@@ -189,8 +189,8 @@ const Auth = () => {
                     disabled={isLoading}
                     variant="hero"
                   >
-                    {isLoading ? 'נרשם...' : 'הירשם'}
-                    <ArrowRight className="w-4 h-4 mr-2" />
+                    {isLoading ? 'Signing Up...' : 'Sign Up'}
+                    <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </form>
               </TabsContent>
@@ -199,7 +199,7 @@ const Auth = () => {
         </Card>
 
         <div className="text-center mt-6 text-sm text-muted-foreground">
-          <p>באמצעות הרשמה אתה מסכים לתנאי השימוש ומדיניות הפרטיות</p>
+          <p>By signing up you agree to our Terms of Service and Privacy Policy</p>
         </div>
       </div>
     </div>

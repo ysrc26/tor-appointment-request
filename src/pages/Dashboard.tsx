@@ -66,7 +66,7 @@ const Dashboard = () => {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-4 border-primary/20 border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-muted-foreground">טוען...</p>
+          <p className="text-muted-foreground">Loading...</p>
         </div>
       </div>
     );
@@ -90,7 +90,7 @@ const Dashboard = () => {
           
           <div className="flex items-center gap-4">
             <span className="text-sm text-muted-foreground hidden sm:block">
-              שלום, {userProfile?.full_name || user.email}
+              Hello, {userProfile?.full_name || user.email}
             </span>
             <Button variant="ghost" size="sm" onClick={handleSignOut}>
               <LogOut className="w-4 h-4" />
@@ -103,10 +103,10 @@ const Dashboard = () => {
         {/* Welcome Section */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">
-            ברוך הבא לדשבורד שלך
+            Welcome to Your Dashboard
           </h1>
           <p className="text-muted-foreground">
-            נהל את העסק שלך, תורים ולקוחות במקום אחד
+            Manage your business, appointments, and clients in one place
           </p>
         </div>
 
@@ -119,19 +119,19 @@ const Dashboard = () => {
                   <Crown className="w-5 h-5 text-primary" />
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="font-medium">מנוי {getSubscriptionTierLabel(limits.subscription_tier)}</span>
+                      <span className="font-medium">{getSubscriptionTierLabel(limits.subscription_tier)} Subscription</span>
                       <Badge variant="outline">
-                        {limits.appointments_used}/{limits.appointments_limit} תורים
+                        {limits.appointments_used}/{limits.appointments_limit} appointments
                       </Badge>
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      נותרו {limits.appointments_limit - limits.appointments_used} תורים החודש
+                      {limits.appointments_limit - limits.appointments_used} remaining this month
                     </p>
                   </div>
                 </div>
                 {limits.subscription_tier === 'free' && (
                   <Button variant="hero" size="sm" onClick={() => navigate('/pricing')}>
-                    שדרג מנוי
+                    Upgrade Subscription
                   </Button>
                 )}
               </div>
@@ -143,13 +143,13 @@ const Dashboard = () => {
         {!businessesLoading && (
           <div className="mb-8">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-foreground">העסקים שלי</h2>
+              <h2 className="text-2xl font-bold text-foreground">My Businesses</h2>
               <Button 
                 onClick={() => navigate('/business/setup')}
                 variant="hero"
               >
                 <Plus className="w-4 h-4 mr-2" />
-                הוסף עסק חדש
+                Add New Business
               </Button>
             </div>
 
@@ -158,10 +158,10 @@ const Dashboard = () => {
                 <CardContent className="text-center py-12">
                   <Store className="w-16 h-16 mx-auto mb-4 text-muted-foreground/50" />
                   <h3 className="text-xl font-semibold text-foreground mb-2">
-                    עדיין אין לך עסק
+                    You don't have any businesses yet
                   </h3>
                   <p className="text-muted-foreground mb-6">
-                    בואו נתחיל ביצירת העסק הראשון שלך במערכת MyTor
+                    Let's start by creating your first business in the MyTor system
                   </p>
                   <Button 
                     onClick={() => navigate('/business/setup')}
@@ -169,7 +169,7 @@ const Dashboard = () => {
                     size="lg"
                   >
                     <Plus className="w-4 h-4 mr-2" />
-                    צור עסק חדש
+                    Create New Business
                   </Button>
                 </CardContent>
               </Card>
@@ -203,7 +203,7 @@ const Dashboard = () => {
                           onClick={() => navigate(`/business/${business.id}`)}
                         >
                           <Settings className="w-4 h-4 mr-2" />
-                          ניהול
+                          Manage
                         </Button>
                         <Button 
                           variant="outline" 
@@ -228,8 +228,8 @@ const Dashboard = () => {
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <CardTitle className="text-lg">תורים</CardTitle>
-                    <CardDescription>צפה ונהל תורים קיימים</CardDescription>
+                    <CardTitle className="text-lg">Appointments</CardTitle>
+                    <CardDescription>View and manage existing appointments</CardDescription>
                   </div>
                   <Calendar className="w-8 h-8 text-primary" />
                 </div>
@@ -237,7 +237,7 @@ const Dashboard = () => {
               <CardContent>
                 <Button className="w-full" variant="outline">
                   <Calendar className="w-4 h-4 mr-2" />
-                  צפה בתורים
+                  View Appointments
                 </Button>
               </CardContent>
             </Card>
@@ -246,8 +246,8 @@ const Dashboard = () => {
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <CardTitle className="text-lg">לקוחות</CardTitle>
-                    <CardDescription>נהל את רשימת הלקוחות</CardDescription>
+                    <CardTitle className="text-lg">Clients</CardTitle>
+                    <CardDescription>Manage your client list</CardDescription>
                   </div>
                   <Users className="w-8 h-8 text-primary" />
                 </div>
@@ -255,7 +255,7 @@ const Dashboard = () => {
               <CardContent>
                 <Button className="w-full" variant="outline">
                   <Users className="w-4 h-4 mr-2" />
-                  צפה בלקוחות
+                  View Clients
                 </Button>
               </CardContent>
             </Card>
@@ -264,8 +264,8 @@ const Dashboard = () => {
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <CardTitle className="text-lg">הגדרות</CardTitle>
-                    <CardDescription>נהל הגדרות ושירותים</CardDescription>
+                    <CardTitle className="text-lg">Settings</CardTitle>
+                    <CardDescription>Manage settings and services</CardDescription>
                   </div>
                   <Settings className="w-8 h-8 text-primary" />
                 </div>
@@ -273,7 +273,7 @@ const Dashboard = () => {
               <CardContent>
                 <Button className="w-full" variant="outline">
                   <Settings className="w-4 h-4 mr-2" />
-                  הגדרות עסק
+                  Business Settings
                 </Button>
               </CardContent>
             </Card>
@@ -286,7 +286,7 @@ const Dashboard = () => {
             <CardContent className="p-6">
               <div className="text-center">
                 <div className="text-2xl font-bold text-foreground">0</div>
-                <div className="text-sm text-muted-foreground">תורים היום</div>
+                <div className="text-sm text-muted-foreground">Today's Appointments</div>
               </div>
             </CardContent>
           </Card>
@@ -295,7 +295,7 @@ const Dashboard = () => {
             <CardContent className="p-6">
               <div className="text-center">
                 <div className="text-2xl font-bold text-foreground">0</div>
-                <div className="text-sm text-muted-foreground">תורים השבוע</div>
+                <div className="text-sm text-muted-foreground">This Week</div>
               </div>
             </CardContent>
           </Card>
@@ -304,7 +304,7 @@ const Dashboard = () => {
             <CardContent className="p-6">
               <div className="text-center">
                 <div className="text-2xl font-bold text-foreground">0</div>
-                <div className="text-sm text-muted-foreground">לקוחות</div>
+                <div className="text-sm text-muted-foreground">Clients</div>
               </div>
             </CardContent>
           </Card>
@@ -313,7 +313,7 @@ const Dashboard = () => {
             <CardContent className="p-6">
               <div className="text-center">
                 <div className="text-2xl font-bold text-foreground">0</div>
-                <div className="text-sm text-muted-foreground">שירותים</div>
+                <div className="text-sm text-muted-foreground">Services</div>
               </div>
             </CardContent>
           </Card>
@@ -324,10 +324,10 @@ const Dashboard = () => {
           <div className="mt-12">
             <div className="text-center mb-8">
               <h2 className="text-2xl font-bold text-foreground mb-2">
-                שדרג את המנוי שלך
+                Upgrade Your Subscription
               </h2>
               <p className="text-muted-foreground">
-                קבל יותר תורים ותכונות מתקדמות
+                Get more appointments and advanced features
               </p>
             </div>
             <PricingPlans showTitle={false} compact={true} />
@@ -337,14 +337,14 @@ const Dashboard = () => {
         {/* Recent Activity */}
         <Card className="border-border/50 mt-8">
           <CardHeader>
-            <CardTitle>פעילות אחרונה</CardTitle>
-            <CardDescription>עדכונים אחרונים מהעסק שלך</CardDescription>
+            <CardTitle>Recent Activity</CardTitle>
+            <CardDescription>Latest updates from your business</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="text-center py-8 text-muted-foreground">
               <Calendar className="w-12 h-12 mx-auto mb-4 opacity-50" />
-              <p>אין פעילות אחרונה להצגה</p>
-              <p className="text-sm">תורים ופעילות יופיעו כאן</p>
+              <p>No recent activity to display</p>
+              <p className="text-sm">Appointments and activity will appear here</p>
             </div>
           </CardContent>
         </Card>
