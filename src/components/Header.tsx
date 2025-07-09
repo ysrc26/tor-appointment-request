@@ -1,9 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Calendar, Menu, X } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <header className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50">
@@ -31,10 +35,20 @@ const Header = () => {
 
         {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-4">
-          <Button variant="ghost">Sign In</Button>
-          <Button variant="hero" size="lg">
-            Start Free Trial
-          </Button>
+          {user ? (
+            <Button variant="hero" size="lg" onClick={() => navigate('/dashboard')}>
+              הדשבורד שלי
+            </Button>
+          ) : (
+            <>
+              <Button variant="ghost" onClick={() => navigate('/auth')}>
+                התחבר
+              </Button>
+              <Button variant="hero" size="lg" onClick={() => navigate('/auth')}>
+                התחל בחינם
+              </Button>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -72,10 +86,20 @@ const Header = () => {
               Demo
             </a>
             <div className="flex flex-col gap-3 pt-4 border-t border-border">
-              <Button variant="ghost" className="w-full">Sign In</Button>
-              <Button variant="hero" className="w-full">
-                Start Free Trial
-              </Button>
+              {user ? (
+                <Button variant="hero" className="w-full" onClick={() => navigate('/dashboard')}>
+                  הדשבורד שלי
+                </Button>
+              ) : (
+                <>
+                  <Button variant="ghost" className="w-full" onClick={() => navigate('/auth')}>
+                    התחבר
+                  </Button>
+                  <Button variant="hero" className="w-full" onClick={() => navigate('/auth')}>
+                    התחל בחינם
+                  </Button>
+                </>
+              )}
             </div>
           </nav>
         </div>
