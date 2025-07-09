@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Calendar, Users, Settings, LogOut, Plus, Store, ExternalLink, Crown } from 'lucide-react';
 import PricingPlans from '@/components/PricingPlans';
+import AffiliateSection from '@/components/AffiliateSection';
 
 const Dashboard = () => {
   const { user, userProfile, loading, signOut } = useAuth();
@@ -294,6 +295,12 @@ const Dashboard = () => {
             </Card>
           </div>
         )}
+
+        {/* Affiliate Program Section */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-foreground mb-6">Affiliate Program</h2>
+          <AffiliateSection />
+        </div>
 
         {/* Statistics Cards */}
         <div className="grid gap-6 md:grid-cols-4 mb-8">

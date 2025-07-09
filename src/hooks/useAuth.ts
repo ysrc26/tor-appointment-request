@@ -8,7 +8,7 @@ interface AuthContextType {
   session: Session | null;
   userProfile: any | null;
   loading: boolean;
-  signUp: (email: string, password: string, fullName: string, phone: string) => Promise<{ error: any }>;
+  signUp: (email: string, password: string, fullName: string, phone: string, referralCode?: string) => Promise<{ error: any }>;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
   updateProfile: (data: any) => Promise<{ error: any }>;
@@ -85,18 +85,19 @@ export const useAuthState = () => {
     }
   };
 
-  const signUp = async (email: string, password: string, fullName: string, phone: string) => {
+  const signUp = async (email: string, password: string, fullName: string, phone: string, referralCode?: string) => {
     try {
       const redirectUrl = `${window.location.origin}/`;
       
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
           emailRedirectTo: redirectUrl,
           data: {
             full_name: fullName,
-            phone: phone
+            phone: phone,
+            referral_code: referralCode
           }
         }
       });
@@ -110,9 +111,26 @@ export const useAuthState = () => {
           variant: "destructive"
         });
       } else {
+        // If referral code was provided and user was created, process the referral
+        if (referralCode && data.user) {
+          try {
+            // Wait a bit for the user to be fully created in the database
+            setTimeout(async () => {
+              await supabase.rpc('process_referral_signup', {
+                p_referred_user_id: data.user.id,
+                p_referral_code: referralCode
+              });
+            }, 2000);
+          } catch (referralError) {
+            console.error('Error processing referral:', referralError);
+          }
+        }
+
         toast({
           title: "Registered Successfully!",
-          description: "Check your email to confirm your account",
+          description: referralCode 
+            ? "Check your email to confirm your account. You'll receive a Premium month free as a welcome bonus!"
+            : "Check your email to confirm your account",
         });
       }
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -10,8 +10,11 @@ import { Calendar, ArrowRight, Mail, Lock, User, Phone } from 'lucide-react';
 
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [showReferralBonus, setShowReferralBonus] = useState(false);
   const { signIn, signUp, user } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const referralCode = searchParams.get('ref');
 
   // Redirect if already logged in
   useEffect(() => {
@@ -19,6 +22,13 @@ const Auth = () => {
       navigate('/dashboard');
     }
   }, [user, navigate]);
+
+  // Show referral bonus message if referral code is present
+  useEffect(() => {
+    if (referralCode) {
+      setShowReferralBonus(true);
+    }
+  }, [referralCode]);
 
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,7 +57,7 @@ const Auth = () => {
     const fullName = formData.get('fullName') as string;
     const phone = formData.get('phone') as string;
 
-    const { error } = await signUp(email, password, fullName, phone);
+    const { error } = await signUp(email, password, fullName, phone, referralCode || undefined);
     
     setIsLoading(false);
   };
@@ -63,11 +73,30 @@ const Auth = () => {
           <span className="text-2xl font-bold text-foreground">MyTor</span>
         </div>
 
+        {/* Referral Bonus Message */}
+        {showReferralBonus && (
+          <Card className="border-green-200 bg-green-50 dark:bg-green-950 dark:border-green-800 mb-4">
+            <CardContent className="p-4">
+              <div className="text-center">
+                <div className="text-green-700 dark:text-green-300 font-medium mb-1">
+                  🎉 Special Referral Bonus!
+                </div>
+                <div className="text-sm text-green-600 dark:text-green-400">
+                  Sign up now and get 1 month Premium subscription completely free!
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         <Card className="border-border/50 shadow-large">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl">Welcome</CardTitle>
             <CardDescription>
-              Sign in or register to start managing your business
+              {showReferralBonus 
+                ? "You've been invited to join MyTor with a special bonus!"
+                : "Sign in or register to start managing your business"
+              }
             </CardDescription>
           </CardHeader>
           <CardContent>

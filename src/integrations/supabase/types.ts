@@ -14,6 +14,93 @@ export type Database = {
   }
   public: {
     Tables: {
+      affiliate_credits: {
+        Row: {
+          credits_available: number | null
+          credits_earned: number
+          credits_used: number
+          id: string
+          last_updated: string
+          user_id: string
+        }
+        Insert: {
+          credits_available?: number | null
+          credits_earned?: number
+          credits_used?: number
+          id?: string
+          last_updated?: string
+          user_id: string
+        }
+        Update: {
+          credits_available?: number | null
+          credits_earned?: number
+          credits_used?: number
+          id?: string
+          last_updated?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      affiliate_referrals: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          id: string
+          referral_code: string
+          referred_user_id: string
+          referrer_user_id: string
+          status: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          referral_code: string
+          referred_user_id: string
+          referrer_user_id: string
+          status?: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          referral_code?: string
+          referred_user_id?: string
+          referrer_user_id?: string
+          status?: string
+        }
+        Relationships: []
+      }
+      affiliate_rewards: {
+        Row: {
+          applied_at: string
+          credits_cost: number
+          expires_at: string | null
+          id: string
+          reward_type: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          applied_at?: string
+          credits_cost: number
+          expires_at?: string | null
+          id?: string
+          reward_type: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          applied_at?: string
+          credits_cost?: number
+          expires_at?: string | null
+          id?: string
+          reward_type?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       appointments: {
         Row: {
           business_id: string | null
@@ -408,6 +495,27 @@ export type Database = {
         }
         Relationships: []
       }
+      user_referral_codes: {
+        Row: {
+          created_at: string
+          id: string
+          referral_code: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          referral_code: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          referral_code?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       users: {
         Row: {
           auth_user_id: string | null
@@ -446,6 +554,23 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      generate_referral_code: {
+        Args: { p_user_id: string }
+        Returns: string
+      }
+      get_affiliate_stats: {
+        Args: { p_user_id: string }
+        Returns: {
+          referral_code: string
+          total_referrals: number
+          pending_referrals: number
+          completed_referrals: number
+          total_credits_earned: number
+          credits_used: number
+          credits_available: number
+          active_rewards: number
+        }[]
+      }
       get_subscription_limits: {
         Args: { p_user_id: string }
         Returns: {
@@ -455,8 +580,20 @@ export type Database = {
           subscription_tier: string
         }[]
       }
+      get_user_referral_code: {
+        Args: { p_user_id: string }
+        Returns: string
+      }
       increment_appointment_usage: {
         Args: { p_user_id: string }
+        Returns: boolean
+      }
+      process_referral_signup: {
+        Args: { p_referred_user_id: string; p_referral_code: string }
+        Returns: boolean
+      }
+      redeem_credits: {
+        Args: { p_user_id: string; p_reward_type: string }
         Returns: boolean
       }
       reset_monthly_usage: {
