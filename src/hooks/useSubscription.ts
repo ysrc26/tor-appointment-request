@@ -135,23 +135,92 @@ export const useSubscription = () => {
       case 'free':
         return {
           appointments: 10,
+          price: 0,
           features: ['10 תורים לחודש', 'ניהול לקוחות בסיסי', 'יומן פשוט']
         };
       case 'premium':
         return {
           appointments: 100,
+          price: 19.90,
           features: ['100 תורים לחודש', 'ניהול לקוחות מתקדם', 'יומן מלא', 'תזכורות SMS']
         };
       case 'business':
         return {
           appointments: 1000,
-          features: ['1000 תורים לחודש', 'כל התכונות', 'דוחות מתקדמים', 'API גישה']
+          price: 49.90,
+          features: ['1000 תורים לחודש', 'כל התכונות', 'דוחות מתקדמים', 'API גישה', 'תמיכה מועדפת']
         };
       default:
         return {
           appointments: 0,
+          price: 0,
           features: []
         };
+    }
+  };
+
+  const createCheckoutSession = async (plan: 'premium' | 'business') => {
+    try {
+      const { data, error } = await supabase.functions.invoke('create-checkout', {
+        body: { plan }
+      });
+
+      if (error) throw error;
+
+      if (data?.url) {
+        // Open Stripe checkout in a new tab
+        window.open(data.url, '_blank');
+      }
+    } catch (error) {
+      console.error('Error creating checkout session:', error);
+      toast({
+        title: "שגיאה ביצירת תשלום",
+        description: "לא ניתן ליצור סשן תשלום. נסה שוב.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const openCustomerPortal = async () => {
+    try {
+      const { data, error } = await supabase.functions.invoke('customer-portal');
+
+      if (error) throw error;
+
+      if (data?.url) {
+        window.open(data.url, '_blank');
+      }
+    } catch (error) {
+      console.error('Error opening customer portal:', error);
+      toast({
+        title: "שגיאה בפתיחת ניהול מנוי",
+        description: "לא ניתן לפתוח את דף ניהול המנוי. נסה שוב.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const checkSubscriptionStatus = async () => {
+    try {
+      const { data, error } = await supabase.functions.invoke('check-subscription');
+
+      if (error) throw error;
+
+      // Refresh local state after checking subscription
+      await fetchSubscriptionInfo();
+      await fetchSubscriptionLimits();
+
+      toast({
+        title: "מצב המנוי עודכן",
+        description: "מידע המנוי נטען מחדש בהצלחה",
+      });
+    } catch (error) {
+      console.error('Error checking subscription status:', error);
+      toast({
+        title: "שגיאה בבדיקת מנוי",
+        description: "לא ניתן לבדוק את מצב המנוי. נסה שוב.",
+        variant: "destructive"
+      });
     }
   };
 
@@ -163,6 +232,9 @@ export const useSubscription = () => {
     incrementUsage,
     getSubscriptionTierLabel,
     getSubscriptionTierLimits,
+    createCheckoutSession,
+    openCustomerPortal,
+    checkSubscriptionStatus,
     refreshLimits: fetchSubscriptionLimits,
     refreshSubscriptionInfo: fetchSubscriptionInfo
   };

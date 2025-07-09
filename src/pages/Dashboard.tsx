@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, Users, Settings, LogOut, Plus, Store, ExternalLink, Crown } from 'lucide-react';
+import PricingPlans from '@/components/PricingPlans';
 
 const Dashboard = () => {
   const { user, userProfile, loading, signOut } = useAuth();
@@ -129,7 +130,7 @@ const Dashboard = () => {
                   </div>
                 </div>
                 {limits.subscription_tier === 'free' && (
-                  <Button variant="hero" size="sm">
+                  <Button variant="hero" size="sm" onClick={() => navigate('/pricing')}>
                     שדרג מנוי
                   </Button>
                 )}
@@ -318,8 +319,23 @@ const Dashboard = () => {
           </Card>
         </div>
 
+        {/* Pricing Plans for Free Users */}
+        {limits && limits.subscription_tier === 'free' && (
+          <div className="mt-12">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-bold text-foreground mb-2">
+                שדרג את המנוי שלך
+              </h2>
+              <p className="text-muted-foreground">
+                קבל יותר תורים ותכונות מתקדמות
+              </p>
+            </div>
+            <PricingPlans showTitle={false} compact={true} />
+          </div>
+        )}
+
         {/* Recent Activity */}
-        <Card className="border-border/50">
+        <Card className="border-border/50 mt-8">
           <CardHeader>
             <CardTitle>פעילות אחרונה</CardTitle>
             <CardDescription>עדכונים אחרונים מהעסק שלך</CardDescription>

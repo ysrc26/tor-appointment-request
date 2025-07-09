@@ -23,11 +23,14 @@ const Header = () => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8">
           <a href="#features" className="text-foreground hover:text-primary transition-colors">
-            Features
+            תכונות
           </a>
-          <a href="#pricing" className="text-foreground hover:text-primary transition-colors">
-            Pricing
-          </a>
+          <button 
+            onClick={() => navigate('/pricing')}
+            className="text-foreground hover:text-primary transition-colors"
+          >
+            מחירים
+          </button>
           <a href="#demo" className="text-foreground hover:text-primary transition-colors">
             Demo
           </a>
@@ -69,15 +72,17 @@ const Header = () => {
               className="text-foreground hover:text-primary transition-colors py-2"
               onClick={() => setIsMenuOpen(false)}
             >
-              Features
+              תכונות
             </a>
-            <a 
-              href="#pricing" 
-              className="text-foreground hover:text-primary transition-colors py-2"
-              onClick={() => setIsMenuOpen(false)}
+            <button 
+              onClick={() => {
+                navigate('/pricing');
+                setIsMenuOpen(false);
+              }}
+              className="text-foreground hover:text-primary transition-colors py-2 text-right"
             >
-              Pricing
-            </a>
+              מחירים
+            </button>
             <a 
               href="#demo" 
               className="text-foreground hover:text-primary transition-colors py-2"
