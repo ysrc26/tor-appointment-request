@@ -111,7 +111,7 @@ const PublicBooking = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/10">
+    <div className="min-h-screen bg-gradient-subtle">
       {/* Header */}
       <header className="border-b border-border/50 bg-background/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -124,142 +124,113 @@ const PublicBooking = () => {
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
-        {/* Business Header */}
-        <div className="mb-8 text-center">
-          <div className="w-20 h-20 bg-gradient-hero rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <span className="text-2xl font-bold text-white">
-              {business.name.charAt(0)}
-            </span>
-          </div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">
-            {business.name}
-          </h1>
-          {business.description && (
-            <p className="text-muted-foreground mb-4 max-w-2xl mx-auto">
-              {business.description}
-            </p>
-          )}
-          
-          <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">
-            {business.phone && (
-              <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4" />
-                <span>{business.phone}</span>
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-md mx-auto">
+          {/* Demo Business Page */}
+          <Card className="p-6 bg-gradient-card shadow-large border-0">
+            {/* Business Header */}
+            <div className="text-center mb-6">
+              <div className="w-20 h-20 bg-gradient-hero rounded-full mx-auto mb-4 flex items-center justify-center">
+                <span className="text-2xl font-bold text-white">
+                  {business.name.charAt(0)}
+                </span>
               </div>
-            )}
-            {business.address && (
-              <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4" />
-                <span>{business.address}</span>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Services Section */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-foreground mb-6">השירותים שלנו</h2>
-          
-          {services.length === 0 ? (
-            <Card>
-              <CardContent className="text-center py-8">
-                <Star className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-medium mb-2">אין שירותים זמינים כרגע</h3>
-                <p className="text-muted-foreground">
-                  העסק עדיין מגדיר את השירותים. אנא נסה שוב מאוחר יותר.
+              <h3 className="text-2xl font-bold text-foreground mb-2">
+                {business.name}
+              </h3>
+              {business.description && (
+                <p className="text-muted-foreground mb-4">
+                  {business.description}
                 </p>
-              </CardContent>
-            </Card>
-          ) : (
-            <div className="grid gap-6 md:grid-cols-2">
-              {services.map((service) => (
-                <Card key={service.id} className="border-border/50 hover:shadow-large transition-all duration-200">
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <CardTitle className="text-right">{service.name}</CardTitle>
-                        {service.description && (
-                          <CardDescription className="text-right mt-2">
-                            {service.description}
-                          </CardDescription>
-                        )}
-                      </div>
-                      {service.price && (
-                        <Badge variant="secondary" className="mr-2">
-                          ₪{service.price}
-                        </Badge>
-                      )}
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <Clock className="w-4 h-4" />
-                        <span>{service.duration_minutes} דקות</span>
-                      </div>
-                      <Button className="mr-2">
-                        קבע תור
-                        <ArrowRight className="w-4 h-4 mr-2" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Terms Section */}
-        {business.terms && (
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>תנאי התורים</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground whitespace-pre-wrap">
-                {business.terms}
-              </p>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Contact Section */}
-        <Card>
-          <CardHeader>
-            <CardTitle>יצירת קשר</CardTitle>
-            <CardDescription>
-              שאלות? רוצה לקבוע תור בטלפון? נשמח לעזור
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {business.phone && (
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <Phone className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-medium">טלפון</p>
-                    <p className="text-muted-foreground">{business.phone}</p>
-                  </div>
-                </div>
               )}
               
-              {business.address && (
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <MapPin className="w-5 h-5 text-primary" />
+              {/* Business Info */}
+              <div className="space-y-2 text-sm text-muted-foreground">
+                {business.address && (
+                  <div className="flex items-center justify-center gap-2">
+                    <MapPin className="w-4 h-4" />
+                    <span>{business.address}</span>
                   </div>
-                  <div>
-                    <p className="font-medium">כתובת</p>
-                    <p className="text-muted-foreground">{business.address}</p>
+                )}
+                {business.phone && (
+                  <div className="flex items-center justify-center gap-2">
+                    <Phone className="w-4 h-4" />
+                    <span>{business.phone}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Services */}
+            {services.length === 0 ? (
+              <div className="text-center py-8">
+                <Star className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                <h4 className="text-lg font-medium mb-2">אין שירותים זמינים כרגע</h4>
+                <p className="text-muted-foreground text-sm">
+                  העסק עדיין מגדיר את השירותים. אנא נסה שוב מאוחר יותר.
+                </p>
+              </div>
+            ) : (
+              <>
+                <div className="space-y-3 mb-6">
+                  <h4 className="font-semibold text-foreground">השירותים הזמינים:</h4>
+                  {services.map((service) => (
+                    <div key={service.id} className="flex justify-between items-center p-3 bg-accent/30 rounded-lg">
+                      <div>
+                        <span className="font-medium text-foreground">{service.name}</span>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <Clock className="w-3 h-3" />
+                          <span>{service.duration_minutes} דקות</span>
+                        </div>
+                      </div>
+                      {service.price && (
+                        <span className="font-semibold text-primary">₪{service.price}</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Available Times Preview */}
+                <div className="mb-6">
+                  <h4 className="font-semibold text-foreground mb-3">זמינות השבוע:</h4>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      "10:00", "11:30", "14:00", 
+                      "15:30", "17:00", "18:30"
+                    ].map((time, index) => (
+                      <button 
+                        key={index}
+                        className="p-2 text-sm bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors"
+                      >
+                        {time}
+                      </button>
+                    ))}
                   </div>
                 </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+
+                {/* CTA Button */}
+                <Button variant="hero" className="w-full mb-4">
+                  <Calendar className="w-4 h-4" />
+                  בקשת תור
+                </Button>
+
+                <p className="text-xs text-center text-muted-foreground">
+                  נדרש אימות SMS • מענה תוך שעתיים
+                </p>
+              </>
+            )}
+
+            {/* Terms Section */}
+            {business.terms && (
+              <div className="mt-6 pt-6 border-t border-border/30">
+                <h4 className="font-semibold text-foreground mb-2">תנאי התורים</h4>
+                <p className="text-xs text-muted-foreground">
+                  {business.terms}
+                </p>
+              </div>
+            )}
+          </Card>
+        </div>
       </div>
     </div>
   );
