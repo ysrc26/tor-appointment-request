@@ -10,6 +10,7 @@ import { Calendar, Settings, Clock, Users, ArrowLeft, ExternalLink } from 'lucid
 import ServicesManagement from '@/components/ServicesManagement';
 import AvailabilityManagement from '@/components/AvailabilityManagement';
 import BusinessSettings from '@/components/BusinessSettings';
+import AppointmentsManagement from '@/components/AppointmentsManagement';
 
 interface Business {
   id: string;
@@ -125,8 +126,9 @@ const BusinessManagement = () => {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="overview">סקירה כללית</TabsTrigger>
+            <TabsTrigger value="appointments">תורים</TabsTrigger>
             <TabsTrigger value="services">השירותים</TabsTrigger>
             <TabsTrigger value="availability">שעות פעילות</TabsTrigger>
             <TabsTrigger value="settings">הגדרות</TabsTrigger>
@@ -197,7 +199,7 @@ const BusinessManagement = () => {
                     </div>
                   </Button>
                   
-                  <Button variant="outline" className="justify-start h-auto p-4">
+                  <Button variant="outline" className="justify-start h-auto p-4" onClick={() => setActiveTab('appointments')}>
                     <div className="text-right">
                       <div className="font-medium">צפה בתורים</div>
                       <div className="text-sm text-muted-foreground">ראה ונהל את כל התורים שלך</div>
@@ -213,6 +215,10 @@ const BusinessManagement = () => {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="appointments">
+            <AppointmentsManagement businessId={businessId!} userId={userProfile!.id} />
           </TabsContent>
 
           <TabsContent value="services">
