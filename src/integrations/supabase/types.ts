@@ -291,6 +291,54 @@ export type Database = {
           },
         ]
       }
+      subscribers: {
+        Row: {
+          billing_period_end: string
+          billing_period_start: string
+          created_at: string
+          email: string
+          id: string
+          monthly_appointments_used: number
+          monthly_limit: number
+          stripe_customer_id: string | null
+          subscribed: boolean
+          subscription_end: string | null
+          subscription_tier: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          billing_period_end?: string
+          billing_period_start?: string
+          created_at?: string
+          email: string
+          id?: string
+          monthly_appointments_used?: number
+          monthly_limit?: number
+          stripe_customer_id?: string | null
+          subscribed?: boolean
+          subscription_end?: string | null
+          subscription_tier?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          billing_period_end?: string
+          billing_period_start?: string
+          created_at?: string
+          email?: string
+          id?: string
+          monthly_appointments_used?: number
+          monthly_limit?: number
+          stripe_customer_id?: string | null
+          subscribed?: boolean
+          subscription_end?: string | null
+          subscription_tier?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       unavailable_dates: {
         Row: {
           business_id: string | null
@@ -369,6 +417,7 @@ export type Database = {
           id: string
           phone: string
           profile_pic: string | null
+          subscription_tier: string
         }
         Insert: {
           auth_user_id?: string | null
@@ -378,6 +427,7 @@ export type Database = {
           id?: string
           phone: string
           profile_pic?: string | null
+          subscription_tier?: string
         }
         Update: {
           auth_user_id?: string | null
@@ -387,6 +437,7 @@ export type Database = {
           id?: string
           phone?: string
           profile_pic?: string | null
+          subscription_tier?: string
         }
         Relationships: []
       }
@@ -395,7 +446,23 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_subscription_limits: {
+        Args: { p_user_id: string }
+        Returns: {
+          can_create_appointment: boolean
+          appointments_used: number
+          appointments_limit: number
+          subscription_tier: string
+        }[]
+      }
+      increment_appointment_usage: {
+        Args: { p_user_id: string }
+        Returns: boolean
+      }
+      reset_monthly_usage: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
