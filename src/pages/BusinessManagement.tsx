@@ -32,6 +32,18 @@ const BusinessManagement = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  // Set active tab based on URL path
+  useEffect(() => {
+    const path = window.location.pathname;
+    if (path.includes('/appointments')) {
+      setActiveTab('appointments');
+    } else if (path.includes('/clients')) {
+      setActiveTab('clients');
+    } else {
+      setActiveTab('overview');
+    }
+  }, []);
+
   useEffect(() => {
     if (!user) {
       navigate('/auth');
