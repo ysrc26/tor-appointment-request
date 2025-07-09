@@ -8,9 +8,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Calendar, Clock, User, Phone, Plus, Filter, Eye, Edit, Trash2 } from 'lucide-react';
+import { Calendar, Clock, User, Phone, Plus, Filter, Eye, Edit, Trash2, Crown } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useSubscription } from '@/hooks/useSubscription';
 import { format, isToday, isTomorrow, isYesterday, startOfWeek, endOfWeek, addWeeks, addDays } from 'date-fns';
 import { he } from 'date-fns/locale';
 import FullCalendar from '@fullcalendar/react';
@@ -63,6 +64,13 @@ const AppointmentsManagement = ({ businessId, userId }: AppointmentsManagementPr
   });
   const [calendarView, setCalendarView] = useState('timeGridWeek');
   const { toast } = useToast();
+  const { 
+    limits, 
+    loading: subscriptionLoading, 
+    checkCanCreateAppointment, 
+    incrementUsage,
+    getSubscriptionTierLabel 
+  } = useSubscription();
 
   useEffect(() => {
     fetchAppointments();
@@ -178,12 +186,28 @@ const AppointmentsManagement = ({ businessId, userId }: AppointmentsManagementPr
   };
 
   const handleCreateAppointment = async () => {
+    // Check subscription limits before creating appointment
+    if (!checkCanCreateAppointment()) {
+      return;
+    }
+
     try {
       const selectedService = services.find(s => s.id === newAppointment.service_id);
       const startTime = newAppointment.start_time;
       const endTime = selectedService 
         ? addMinutesToTime(startTime, selectedService.duration_minutes)
         : addMinutesToTime(startTime, 60);
+
+      // First, try to increment usage
+      const canIncrement = await incrementUsage();
+      if (!canIncrement) {
+        toast({
+          title: "הגעת לגבול המנוי",
+          description: "לא ניתן ליצור תורים נוספים במנוי הנוכחי",
+          variant: "destructive"
+        });
+        return;
+      }
 
       const { error } = await supabase
         .from('appointments')
@@ -346,6 +370,35 @@ const AppointmentsManagement = ({ businessId, userId }: AppointmentsManagementPr
 
   return (
     <div className="space-y-6">
+      {/* Subscription Status */}
+      {limits && (
+        <Card className="border-border/50 bg-muted/30">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Crown className="w-5 h-5 text-primary" />
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium">מנוי {getSubscriptionTierLabel(limits.subscription_tier)}</span>
+                    <Badge variant="outline">
+                      {limits.appointments_used}/{limits.appointments_limit} תורים
+                    </Badge>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    נותרו {limits.appointments_limit - limits.appointments_used} תורים החודש
+                  </p>
+                </div>
+              </div>
+              {limits.subscription_tier === 'free' && (
+                <Button variant="hero" size="sm">
+                  שדרג מנוי
+                </Button>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       <div className="flex justify-between items-center">
         <div>
           <h3 className="text-lg font-medium">ניהול תורים</h3>

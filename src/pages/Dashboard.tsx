@@ -1,13 +1,21 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
+import { useSubscription } from '@/hooks/useSubscription';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Calendar, Users, Settings, LogOut, Plus, Store, ExternalLink } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Calendar, Users, Settings, LogOut, Plus, Store, ExternalLink, Crown } from 'lucide-react';
 
 const Dashboard = () => {
   const { user, userProfile, loading, signOut } = useAuth();
+  const { 
+    limits, 
+    subscriptionInfo, 
+    loading: subscriptionLoading, 
+    getSubscriptionTierLabel 
+  } = useSubscription();
   const navigate = useNavigate();
   const [businesses, setBusinesses] = useState<any[]>([]);
   const [businessesLoading, setBusinessesLoading] = useState(true);
@@ -100,6 +108,35 @@ const Dashboard = () => {
             נהל את העסק שלך, תורים ולקוחות במקום אחד
           </p>
         </div>
+
+        {/* Subscription Status */}
+        {limits && (
+          <Card className="border-border/50 bg-muted/30 mb-8">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Crown className="w-5 h-5 text-primary" />
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium">מנוי {getSubscriptionTierLabel(limits.subscription_tier)}</span>
+                      <Badge variant="outline">
+                        {limits.appointments_used}/{limits.appointments_limit} תורים
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      נותרו {limits.appointments_limit - limits.appointments_used} תורים החודש
+                    </p>
+                  </div>
+                </div>
+                {limits.subscription_tier === 'free' && (
+                  <Button variant="hero" size="sm">
+                    שדרג מנוי
+                  </Button>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Businesses Section */}
         {!businessesLoading && (
