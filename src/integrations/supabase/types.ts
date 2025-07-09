@@ -18,6 +18,7 @@ export type Database = {
         Row: {
           credits_available: number | null
           credits_earned: number
+          credits_pending: number | null
           credits_used: number
           id: string
           last_updated: string
@@ -26,6 +27,7 @@ export type Database = {
         Insert: {
           credits_available?: number | null
           credits_earned?: number
+          credits_pending?: number | null
           credits_used?: number
           id?: string
           last_updated?: string
@@ -34,6 +36,7 @@ export type Database = {
         Update: {
           credits_available?: number | null
           credits_earned?: number
+          credits_pending?: number | null
           credits_used?: number
           id?: string
           last_updated?: string
@@ -45,29 +48,47 @@ export type Database = {
         Row: {
           completed_at: string | null
           created_at: string
+          credits_awarded_at: string | null
+          credits_pending: boolean | null
+          fraud_score: number | null
           id: string
+          ip_address: unknown | null
+          phone_verified: boolean | null
           referral_code: string
           referred_user_id: string
           referrer_user_id: string
           status: string
+          subscription_purchased: boolean | null
         }
         Insert: {
           completed_at?: string | null
           created_at?: string
+          credits_awarded_at?: string | null
+          credits_pending?: boolean | null
+          fraud_score?: number | null
           id?: string
+          ip_address?: unknown | null
+          phone_verified?: boolean | null
           referral_code: string
           referred_user_id: string
           referrer_user_id: string
           status?: string
+          subscription_purchased?: boolean | null
         }
         Update: {
           completed_at?: string | null
           created_at?: string
+          credits_awarded_at?: string | null
+          credits_pending?: boolean | null
+          fraud_score?: number | null
           id?: string
+          ip_address?: unknown | null
+          phone_verified?: boolean | null
           referral_code?: string
           referred_user_id?: string
           referrer_user_id?: string
           status?: string
+          subscription_purchased?: boolean | null
         }
         Relationships: []
       }
@@ -337,6 +358,36 @@ export type Database = {
         }
         Relationships: []
       }
+      referral_activity_log: {
+        Row: {
+          action_type: string
+          created_at: string
+          id: string
+          ip_address: unknown | null
+          metadata: Json | null
+          referral_code: string | null
+          referred_user_id: string | null
+        }
+        Insert: {
+          action_type: string
+          created_at?: string
+          id?: string
+          ip_address?: unknown | null
+          metadata?: Json | null
+          referral_code?: string | null
+          referred_user_id?: string | null
+        }
+        Update: {
+          action_type?: string
+          created_at?: string
+          id?: string
+          ip_address?: unknown | null
+          metadata?: Json | null
+          referral_code?: string | null
+          referred_user_id?: string | null
+        }
+        Relationships: []
+      }
       services: {
         Row: {
           business_id: string
@@ -554,6 +605,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      award_pending_credits: {
+        Args: Record<PropertyKey, never>
+        Returns: number
+      }
       generate_referral_code: {
         Args: { p_user_id: string }
         Returns: string
@@ -565,10 +620,14 @@ export type Database = {
           total_referrals: number
           pending_referrals: number
           completed_referrals: number
+          phone_verified_referrals: number
+          subscription_referrals: number
           total_credits_earned: number
           credits_used: number
           credits_available: number
+          credits_pending: number
           active_rewards: number
+          next_credit_award_date: string
         }[]
       }
       get_subscription_limits: {
@@ -588,8 +647,22 @@ export type Database = {
         Args: { p_user_id: string }
         Returns: boolean
       }
+      process_phone_verification: {
+        Args: { p_user_id: string }
+        Returns: boolean
+      }
       process_referral_signup: {
-        Args: { p_referred_user_id: string; p_referral_code: string }
+        Args:
+          | { p_referred_user_id: string; p_referral_code: string }
+          | {
+              p_referred_user_id: string
+              p_referral_code: string
+              p_ip_address?: unknown
+            }
+        Returns: Json
+      }
+      process_subscription_purchase: {
+        Args: { p_user_id: string }
         Returns: boolean
       }
       redeem_credits: {

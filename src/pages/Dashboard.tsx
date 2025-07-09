@@ -262,8 +262,7 @@ const Dashboard = () => {
                 <Button 
                   className="w-full" 
                   variant="outline"
-                  onClick={() => businesses.length > 0 && navigate(`/business/${businesses[0].id}/clients`)}
-                  disabled={businesses.length === 0}
+                  onClick={() => navigate('/clients')}
                 >
                   <Users className="w-4 h-4 mr-2" />
                   View Clients

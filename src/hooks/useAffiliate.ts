@@ -8,10 +8,14 @@ interface AffiliateStats {
   total_referrals: number;
   pending_referrals: number;
   completed_referrals: number;
+  phone_verified_referrals: number;
+  subscription_referrals: number;
   total_credits_earned: number;
   credits_used: number;
   credits_available: number;
+  credits_pending: number;
   active_rewards: number;
+  next_credit_award_date: string | null;
 }
 
 interface AffiliateReward {

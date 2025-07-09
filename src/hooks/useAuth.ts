@@ -114,12 +114,26 @@ export const useAuthState = () => {
         // If referral code was provided and user was created, process the referral
         if (referralCode && data.user) {
           try {
+            // Get IP address for fraud prevention
+            const ipAddress = await fetch('https://api64.ipify.org?format=json')
+              .then(res => res.json())
+              .then(data => data.ip)
+              .catch(() => null);
+
             // Wait a bit for the user to be fully created in the database
             setTimeout(async () => {
-              await supabase.rpc('process_referral_signup', {
-                p_referred_user_id: data.user.id,
-                p_referral_code: referralCode
-              });
+              const { data: referralResult, error: referralError } = await supabase
+                .rpc('process_referral_signup', {
+                  p_referred_user_id: data.user.id,
+                  p_referral_code: referralCode,
+                  p_ip_address: ipAddress
+                });
+
+              if (referralError) {
+                console.error('Error processing referral:', referralError);
+              } else if (referralResult) {
+                console.log('Referral processed:', referralResult);
+              }
             }, 2000);
           } catch (referralError) {
             console.error('Error processing referral:', referralError);

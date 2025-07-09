@@ -13,7 +13,10 @@ import {
   Star, 
   Crown, 
   ExternalLink,
-  Coins
+  Coins,
+  Clock,
+  Shield,
+  AlertTriangle
 } from 'lucide-react';
 
 const AffiliateSection = () => {
@@ -80,18 +83,22 @@ const AffiliateSection = () => {
         </CardHeader>
         <CardContent className="space-y-6">
           {/* Stats Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             <div className="text-center p-4 bg-background/50 rounded-lg border border-border/50">
               <div className="text-2xl font-bold text-primary">{stats.total_referrals}</div>
               <div className="text-sm text-muted-foreground">Total Referrals</div>
+            </div>
+            <div className="text-center p-4 bg-background/50 rounded-lg border border-border/50">
+              <div className="text-2xl font-bold text-blue-500">{stats.phone_verified_referrals}</div>
+              <div className="text-sm text-muted-foreground">Phone Verified</div>
             </div>
             <div className="text-center p-4 bg-background/50 rounded-lg border border-border/50">
               <div className="text-2xl font-bold text-orange-500">{stats.credits_available}</div>
               <div className="text-sm text-muted-foreground">Available Credits</div>
             </div>
             <div className="text-center p-4 bg-background/50 rounded-lg border border-border/50">
-              <div className="text-2xl font-bold text-green-500">{stats.total_credits_earned}</div>
-              <div className="text-sm text-muted-foreground">Total Earned</div>
+              <div className="text-2xl font-bold text-yellow-500">{stats.credits_pending}</div>
+              <div className="text-sm text-muted-foreground">Pending Credits</div>
             </div>
             <div className="text-center p-4 bg-background/50 rounded-lg border border-border/50">
               <div className="text-2xl font-bold text-purple-500">{stats.active_rewards}</div>
@@ -259,13 +266,119 @@ const AffiliateSection = () => {
         </Card>
       </div>
 
+      {/* Credit Tracking & Fraud Prevention */}
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Credit Tracking */}
+        <Card className="border-border/50">
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Clock className="w-5 h-5 text-blue-500" />
+              <CardTitle>Credit Tracking</CardTitle>
+            </div>
+            <CardDescription>
+              Monitor your pending credits and award dates
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {stats.credits_pending > 0 ? (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-950 rounded-lg border border-blue-200 dark:border-blue-800">
+                  <div>
+                    <div className="font-medium text-blue-700 dark:text-blue-300">
+                      Pending Credits
+                    </div>
+                    <div className="text-sm text-blue-600 dark:text-blue-400">
+                      {stats.credits_pending} credits awaiting award
+                    </div>
+                  </div>
+                  <Badge variant="secondary" className="bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
+                    {stats.credits_pending}
+                  </Badge>
+                </div>
+                {stats.next_credit_award_date && (
+                  <div className="flex items-center justify-between p-3 bg-yellow-50 dark:bg-yellow-950 rounded-lg border border-yellow-200 dark:border-yellow-800">
+                    <div>
+                      <div className="font-medium text-yellow-700 dark:text-yellow-300">
+                        Next Award Date
+                      </div>
+                      <div className="text-sm text-yellow-600 dark:text-yellow-400">
+                        {new Date(stats.next_credit_award_date).toLocaleDateString()}
+                      </div>
+                    </div>
+                    <Clock className="w-5 h-5 text-yellow-500" />
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="text-center py-8 text-muted-foreground">
+                <Clock className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                <p>No pending credits</p>
+                <p className="text-sm">Credits are awarded 7 days after phone verification</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Fraud Prevention Warning */}
+        <Card className="border-border/50">
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Shield className="w-5 h-5 text-green-500" />
+              <CardTitle>Fair Use Policy</CardTitle>
+            </div>
+            <CardDescription>
+              Important information about the affiliate program
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="p-4 bg-amber-50 dark:bg-amber-950 rounded-lg border border-amber-200 dark:border-amber-800">
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-amber-500 mt-0.5 flex-shrink-0" />
+                <div className="space-y-2">
+                  <h4 className="font-medium text-amber-700 dark:text-amber-300">
+                    Fair Use Required
+                  </h4>
+                  <p className="text-sm text-amber-600 dark:text-amber-400">
+                    Credits are awarded based on fair use. Our system monitors for fraudulent activity including:
+                  </p>
+                  <ul className="text-sm text-amber-600 dark:text-amber-400 list-disc list-inside space-y-1">
+                    <li>Fake email addresses</li>
+                    <li>Multiple signups from same IP</li>
+                    <li>Immediate subscription cancellations</li>
+                    <li>Suspicious activity patterns</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div className="p-4 bg-red-50 dark:bg-red-950 rounded-lg border border-red-200 dark:border-red-800">
+              <div className="flex items-start gap-3">
+                <Shield className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
+                <div className="space-y-2">
+                  <h4 className="font-medium text-red-700 dark:text-red-300">
+                    Consequences of Fraud
+                  </h4>
+                  <p className="text-sm text-red-600 dark:text-red-400">
+                    Detected fraud or misuse will result in:
+                  </p>
+                  <ul className="text-sm text-red-600 dark:text-red-400 list-disc list-inside space-y-1">
+                    <li>Immediate credit cancellation</li>
+                    <li>Removal from affiliate program</li>
+                    <li>Possible account suspension</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* How it Works */}
       <Card className="border-border/50">
         <CardHeader>
           <CardTitle>How It Works</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-4 gap-6">
             <div className="text-center">
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
                 <span className="text-xl font-bold text-primary">1</span>
@@ -279,14 +392,23 @@ const AffiliateSection = () => {
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
                 <span className="text-xl font-bold text-primary">2</span>
               </div>
-              <h3 className="font-medium mb-2">They Sign Up</h3>
+              <h3 className="font-medium mb-2">They Sign Up & Verify</h3>
               <p className="text-sm text-muted-foreground">
-                When they register, they get 1 month Premium free and you earn 10 credits
+                When they register and verify their phone, they get 1 month Premium free
               </p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
                 <span className="text-xl font-bold text-primary">3</span>
+              </div>
+              <h3 className="font-medium mb-2">Earn Credits</h3>
+              <p className="text-sm text-muted-foreground">
+                You earn 10 credits after 7 days (+ 20 bonus if they purchase subscription)
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span className="text-xl font-bold text-primary">4</span>
               </div>
               <h3 className="font-medium mb-2">Redeem Rewards</h3>
               <p className="text-sm text-muted-foreground">

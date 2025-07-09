@@ -13,6 +13,7 @@ import PublicBooking from "./pages/PublicBooking";
 import Pricing from "./pages/Pricing";
 import SubscriptionSuccess from "./pages/SubscriptionSuccess";
 import SubscriptionCanceled from "./pages/SubscriptionCanceled";
+import ClientManagement from "./pages/ClientManagement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/business/:businessId" element={<BusinessManagement />} />
             <Route path="/business/:businessId/appointments" element={<BusinessManagement />} />
             <Route path="/business/:businessId/clients" element={<BusinessManagement />} />
+            <Route path="/clients" element={<ClientManagement />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/subscription-success" element={<SubscriptionSuccess />} />
             <Route path="/subscription-canceled" element={<SubscriptionCanceled />} />
