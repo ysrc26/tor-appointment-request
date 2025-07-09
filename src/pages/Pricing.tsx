@@ -15,17 +15,17 @@ const Pricing = () => {
       <main className="container mx-auto px-4 py-16">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            מחירים שקופים וגמישים
+            Transparent and Flexible Pricing
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            בחר בתוכנית המתאימה לצרכים שלך. התחל חינם ושדרג רק כשאתה מוכן.
+            Choose the plan that fits your needs. Start free and upgrade only when you're ready.
           </p>
           <Button 
             variant="outline" 
             onClick={() => navigate('/auth')}
           >
-            התחל היום
             <ArrowRight className="w-4 h-4 mr-2" />
+            Start Today
           </Button>
         </div>
 
@@ -34,35 +34,35 @@ const Pricing = () => {
         {/* FAQ Section */}
         <div className="mt-20">
           <h2 className="text-3xl font-bold text-center text-foreground mb-12">
-            שאלות נפוצות
+            Frequently Asked Questions
           </h2>
           
           <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
             <div>
-              <h3 className="font-semibold text-foreground mb-2">האם יש התחייבות?</h3>
+              <h3 className="font-semibold text-foreground mb-2">Is there a commitment?</h3>
               <p className="text-muted-foreground text-sm">
-                לא, אין התחייבות. ניתן לבטל או לשנות מנוי בכל עת.
+                No, there's no commitment. You can cancel or change your subscription anytime.
               </p>
             </div>
             
             <div>
-              <h3 className="font-semibold text-foreground mb-2">מה קרה אם אחרוג מכמות התורים?</h3>
+              <h3 className="font-semibold text-foreground mb-2">What happens if I exceed my appointment limit?</h3>
               <p className="text-muted-foreground text-sm">
-                המערכת תמנע יצירת תורים נוספים. תוכל לשדרג מנוי בכל עת.
+                The system will prevent creating additional appointments. You can upgrade anytime.
               </p>
             </div>
             
             <div>
-              <h3 className="font-semibold text-foreground mb-2">איך אני משנה תוכנית?</h3>
+              <h3 className="font-semibold text-foreground mb-2">How do I change plans?</h3>
               <p className="text-muted-foreground text-sm">
-                ניתן לשדרג או להוריד דרגת מנוי בכל עת מהדשבורד.
+                You can upgrade or downgrade your subscription anytime from the dashboard.
               </p>
             </div>
             
             <div>
-              <h3 className="font-semibold text-foreground mb-2">איך מתבצע החיוב?</h3>
+              <h3 className="font-semibold text-foreground mb-2">How does billing work?</h3>
               <p className="text-muted-foreground text-sm">
-                החיוב מתבצע מדי חודש דרך Stripe באופן מאובטח.
+                Billing is processed monthly through Stripe securely.
               </p>
             </div>
           </div>

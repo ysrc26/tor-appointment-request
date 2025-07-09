@@ -85,8 +85,8 @@ export const useSubscription = () => {
     
     if (!canCreate) {
       toast({
-        title: "הגעת לגבול המנוי",
-        description: `הגעת לגבול של ${limits.appointments_limit} תורים לחודש. שדרג את המנוי שלך לתורים נוספים.`,
+        title: "Subscription Limit Reached",
+        description: `You've reached your limit of ${limits.appointments_limit} appointments per month. Upgrade your subscription for more appointments.`,
         variant: "destructive"
       });
     }
@@ -120,11 +120,11 @@ export const useSubscription = () => {
   const getSubscriptionTierLabel = (tier: string) => {
     switch (tier) {
       case 'free':
-        return 'חינמי';
+        return 'Free';
       case 'premium':
-        return 'פרימיום';
+        return 'Premium';
       case 'business':
-        return 'עסקי';
+        return 'Business';
       default:
         return tier;
     }
@@ -136,19 +136,19 @@ export const useSubscription = () => {
         return {
           appointments: 10,
           price: 0,
-          features: ['10 תורים לחודש', 'ניהול לקוחות בסיסי', 'יומן פשוט']
+          features: ['10 appointments per month', 'Basic client management', 'Simple calendar']
         };
       case 'premium':
         return {
           appointments: 100,
           price: 19.90,
-          features: ['100 תורים לחודש', 'ניהול לקוחות מתקדם', 'יומן מלא', 'תזכורות SMS']
+          features: ['100 appointments per month', 'Advanced client management', 'Full calendar', 'SMS reminders']
         };
       case 'business':
         return {
           appointments: 1000,
           price: 49.90,
-          features: ['1000 תורים לחודש', 'כל התכונות', 'דוחות מתקדמים', 'API גישה', 'תמיכה מועדפת']
+          features: ['1000 appointments per month', 'All features', 'Advanced reports', 'API access', 'Priority support']
         };
       default:
         return {
@@ -174,8 +174,8 @@ export const useSubscription = () => {
     } catch (error) {
       console.error('Error creating checkout session:', error);
       toast({
-        title: "שגיאה ביצירת תשלום",
-        description: "לא ניתן ליצור סשן תשלום. נסה שוב.",
+        title: "Payment Error",
+        description: "Unable to create payment session. Please try again.",
         variant: "destructive"
       });
     }
@@ -193,8 +193,8 @@ export const useSubscription = () => {
     } catch (error) {
       console.error('Error opening customer portal:', error);
       toast({
-        title: "שגיאה בפתיחת ניהול מנוי",
-        description: "לא ניתן לפתוח את דף ניהול המנוי. נסה שוב.",
+        title: "Subscription Management Error",
+        description: "Unable to open subscription management page. Please try again.",
         variant: "destructive"
       });
     }
@@ -211,14 +211,14 @@ export const useSubscription = () => {
       await fetchSubscriptionLimits();
 
       toast({
-        title: "מצב המנוי עודכן",
-        description: "מידע המנוי נטען מחדש בהצלחה",
+        title: "Subscription Status Updated",
+        description: "Subscription information refreshed successfully",
       });
     } catch (error) {
       console.error('Error checking subscription status:', error);
       toast({
-        title: "שגיאה בבדיקת מנוי",
-        description: "לא ניתן לבדוק את מצב המנוי. נסה שוב.",
+        title: "Subscription Check Error",
+        description: "Unable to check subscription status. Please try again.",
         variant: "destructive"
       });
     }

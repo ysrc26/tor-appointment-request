@@ -24,23 +24,23 @@ const SubscriptionSuccess = () => {
     switch (planType) {
       case 'premium':
         return {
-          name: 'פרימיום',
+          name: 'Premium',
           icon: Crown,
-          features: ['100 תורים לחודש', 'ניהול לקוחות מתקדם', 'יומן מלא', 'תזכורות SMS'],
-          price: '19.90₪'
+          features: ['100 appointments per month', 'Advanced client management', 'Full calendar', 'SMS reminders'],
+          price: '₪19.90'
         };
       case 'business':
         return {
-          name: 'עסקי',
+          name: 'Business',
           icon: Zap,
-          features: ['1000 תורים לחודש', 'כל התכונות', 'דוחות מתקדמים', 'API גישה'],
-          price: '49.90₪'
+          features: ['1000 appointments per month', 'All features', 'Advanced reports', 'API access'],
+          price: '₪49.90'
         };
       default:
         return {
-          name: 'המנוי שלך',
+          name: 'Your Subscription',
           icon: CheckCircle,
-          features: ['גישה מלאה לכל התכונות'],
+          features: ['Full access to all features'],
           price: ''
         };
     }
@@ -59,17 +59,17 @@ const SubscriptionSuccess = () => {
             </div>
           </div>
           <CardTitle className="text-2xl text-foreground">
-            תשלום הושלם בהצלחה!
+            Payment Completed Successfully!
           </CardTitle>
           <CardDescription>
-            ברוך הבא למנוי {planDetails.name}
+            Welcome to your {planDetails.name} subscription
           </CardDescription>
         </CardHeader>
 
         <CardContent className="space-y-6">
           <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4 rounded-lg">
             <h3 className="font-medium text-green-800 dark:text-green-200 mb-2">
-              מה קיבלת:
+              What you get:
             </h3>
             <ul className="space-y-1">
               {planDetails.features.map((feature, index) => (
@@ -84,7 +84,7 @@ const SubscriptionSuccess = () => {
           {planDetails.price && (
             <div className="text-center p-3 bg-muted/50 rounded-lg">
               <p className="text-sm text-muted-foreground">
-                חיוב חודשי: <span className="font-medium">{planDetails.price}</span>
+                Monthly billing: <span className="font-medium">{planDetails.price}</span>
               </p>
             </div>
           )}
@@ -94,14 +94,14 @@ const SubscriptionSuccess = () => {
               className="w-full" 
               onClick={() => navigate('/dashboard')}
             >
-              חזור לדשבורד
               <ArrowRight className="w-4 h-4 mr-2" />
+              Back to Dashboard
             </Button>
           </div>
 
           <div className="text-center">
             <p className="text-xs text-muted-foreground">
-              תוכל לנהל את המנוי שלך בכל עת מהדשבורד
+              You can manage your subscription anytime from the dashboard
             </p>
           </div>
         </CardContent>

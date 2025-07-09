@@ -23,52 +23,52 @@ const PricingPlans = ({ showTitle = true, compact = false }: PricingPlansProps) 
   const plans = [
     {
       id: 'free',
-      name: 'חינמי',
+      name: 'Free',
       price: 0,
       period: '',
       icon: Star,
-      description: 'מושלם להתחלה',
-      features: ['10 תורים לחודש', 'ניהול לקוחות בסיסי', 'יומן פשוט'],
-      buttonText: 'התחל חינם',
+      description: 'Perfect to get started',
+      features: ['10 appointments per month', 'Basic client management', 'Simple calendar'],
+      buttonText: 'Start Free',
       popular: false,
       action: () => {}
     },
     {
       id: 'premium',
-      name: 'פרימיום',
+      name: 'Premium',
       price: 19.90,
-      period: '/חודש',
+      period: '/month',
       icon: Crown,
-      description: 'לעסקים בצמיחה',
+      description: 'For growing businesses',
       features: [
-        '100 תורים לחודש',
-        'ניהול לקוחות מתקדם',
-        'יומן מלא',
-        'תזכורות SMS',
-        'דוחות בסיסיים',
-        'תמיכה באימייל'
+        '100 appointments per month',
+        'Advanced client management',
+        'Full calendar',
+        'SMS reminders',
+        'Basic reports',
+        'Email support'
       ],
-      buttonText: 'שדרג לפרימיום',
+      buttonText: 'Upgrade to Premium',
       popular: true,
       action: () => createCheckoutSession('premium')
     },
     {
       id: 'business',
-      name: 'עסקי',
+      name: 'Business',
       price: 49.90,
-      period: '/חודש',
+      period: '/month',
       icon: Zap,
-      description: 'לעסקים מתקדמים',
+      description: 'For advanced businesses',
       features: [
-        '1000 תורים לחודש',
-        'כל התכונות',
-        'דוחות מתקדמים',
-        'API גישה',
-        'תמיכה מועדפת',
-        'ניתוח נתונים',
-        'אינטגרציות מתקדמות'
+        '1000 appointments per month',
+        'All features',
+        'Advanced reports',
+        'API access',
+        'Priority support',
+        'Data analytics',
+        'Advanced integrations'
       ],
-      buttonText: 'שדרג לעסקי',
+      buttonText: 'Upgrade to Business',
       popular: false,
       action: () => createCheckoutSession('business')
     }
@@ -77,13 +77,13 @@ const PricingPlans = ({ showTitle = true, compact = false }: PricingPlansProps) 
   const currentTier = limits?.subscription_tier || 'free';
 
   const getButtonText = (planId: string) => {
-    if (!user) return 'התחבר כדי להתחיל';
+    if (!user) return 'Sign in to get started';
     
     if (planId === currentTier) {
-      return planId === 'free' ? 'התוכנית הנוכחית' : 'נהל מנוי';
+      return planId === 'free' ? 'Current Plan' : 'Manage Subscription';
     }
     
-    return plans.find(p => p.id === planId)?.buttonText || 'בחר תוכנית';
+    return plans.find(p => p.id === planId)?.buttonText || 'Choose Plan';
   };
 
   const getButtonAction = (planId: string) => {
@@ -107,10 +107,10 @@ const PricingPlans = ({ showTitle = true, compact = false }: PricingPlansProps) 
       {showTitle && (
         <div className="text-center">
           <h2 className="text-3xl font-bold text-foreground mb-4">
-            בחר את התוכנית המתאימה לך
+            Choose the plan that's right for you
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            התחל חינם ושדרג בכל עת. כל התוכניות כוללות גיבוי אוטומטי ותמיכה מלאה.
+            Start free and upgrade anytime. All plans include automatic backup and full support.
           </p>
         </div>
       )}
@@ -134,13 +134,13 @@ const PricingPlans = ({ showTitle = true, compact = false }: PricingPlansProps) 
             >
               {plan.popular && (
                 <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground">
-                  הכי פופולרי
+                  Most Popular
                 </Badge>
               )}
               
               {isCurrent && (
                 <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-green-500 text-white">
-                  התוכנית הנוכחית
+                  Current Plan
                 </Badge>
               )}
 
@@ -161,7 +161,7 @@ const PricingPlans = ({ showTitle = true, compact = false }: PricingPlansProps) 
                 <div className="mt-4">
                   <div className="flex items-baseline justify-center">
                     <span className="text-4xl font-bold text-foreground">
-                      {plan.price === 0 ? 'חינם' : `₪${plan.price}`}
+                      {plan.price === 0 ? 'Free' : `₪${plan.price}`}
                     </span>
                     {plan.period && (
                       <span className="text-muted-foreground ml-1">{plan.period}</span>
@@ -198,7 +198,7 @@ const PricingPlans = ({ showTitle = true, compact = false }: PricingPlansProps) 
                 {isCurrent && limits && (
                   <div className="text-center pt-2">
                     <p className="text-xs text-muted-foreground">
-                      השתמשת ב-{limits.appointments_used} מתוך {limits.appointments_limit} תורים החודש
+                      Used {limits.appointments_used} of {limits.appointments_limit} appointments this month
                     </p>
                   </div>
                 )}
@@ -211,7 +211,7 @@ const PricingPlans = ({ showTitle = true, compact = false }: PricingPlansProps) 
       {user && (
         <div className="text-center">
           <p className="text-sm text-muted-foreground">
-            ניתן לבטל או לשנות מנוי בכל עת. ללא התחייבות לטווח ארוך.
+            Cancel or change your subscription anytime. No long-term commitment.
           </p>
         </div>
       )}

@@ -16,17 +16,17 @@ const SubscriptionCanceled = () => {
             </div>
           </div>
           <CardTitle className="text-2xl text-foreground">
-            תשלום בוטל
+            Payment Canceled
           </CardTitle>
           <CardDescription>
-            התשלום בוטל ולא בוצע חיוב
+            Payment was canceled and no charge was made
           </CardDescription>
         </CardHeader>
 
         <CardContent className="space-y-6">
           <div className="bg-muted/50 p-4 rounded-lg">
             <p className="text-sm text-muted-foreground text-center">
-              אין דאגה! לא בוצע שום חיוב. תוכל לנסות שוב בכל עת או להמשיך עם המנוי החינמי.
+              No worries! No charge was made. You can try again anytime or continue with the free plan.
             </p>
           </div>
 
@@ -35,8 +35,8 @@ const SubscriptionCanceled = () => {
               className="w-full" 
               onClick={() => navigate('/dashboard')}
             >
-              חזור לדשבורד
               <ArrowRight className="w-4 h-4 mr-2" />
+              Back to Dashboard
             </Button>
             
             <Button 
@@ -45,13 +45,13 @@ const SubscriptionCanceled = () => {
               onClick={() => navigate(-1)}
             >
               <RefreshCw className="w-4 h-4 ml-2" />
-              נסה שוב
+              Try Again
             </Button>
           </div>
 
           <div className="text-center">
             <p className="text-xs text-muted-foreground">
-              ניתן לשדרג מנוי בכל עת מהדשבורד
+              You can upgrade your subscription anytime from the dashboard
             </p>
           </div>
         </CardContent>

@@ -67,13 +67,13 @@ serve(async (req) => {
     const planPrices = {
       premium: {
         amount: 1990, // 19.90 NIS in Agorot
-        name: "מנוי פרימיום",
-        features: ["100 תורים לחודש", "ניהול לקוחות מתקדם", "יומן מלא", "תזכורות SMS"]
+        name: "Premium Subscription",
+        features: ["100 appointments per month", "Advanced client management", "Full calendar", "SMS reminders"]
       },
       business: {
         amount: 4990, // 49.90 NIS in Agorot  
-        name: "מנוי עסקי",
-        features: ["1000 תורים לחודש", "כל התכונות", "דוחות מתקדמים", "API גישה", "תמיכה מועדפת"]
+        name: "Business Subscription",
+        features: ["1000 appointments per month", "All features", "Advanced reports", "API access", "Priority support"]
       }
     };
 
