@@ -7,6 +7,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Globe } from 'lucide-react';
+import { useUserLanguage } from '@/hooks/useUserLanguage';
 
 const languages = [
   { code: 'en', name: 'English', flag: '🇺🇸' },
@@ -15,12 +16,15 @@ const languages = [
 
 export const LanguageSelector = () => {
   const { i18n, t } = useTranslation('common');
+  const { saveLanguagePreference } = useUserLanguage();
 
-  const changeLanguage = (langCode: string) => {
-    i18n.changeLanguage(langCode);
+  const changeLanguage = async (langCode: string) => {
+    await i18n.changeLanguage(langCode);
     // Update document direction for RTL support
     document.documentElement.dir = langCode === 'he' ? 'rtl' : 'ltr';
     document.documentElement.lang = langCode;
+    // Save to database if user is logged in
+    await saveLanguagePreference(langCode);
   };
 
   const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];

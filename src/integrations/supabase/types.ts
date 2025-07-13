@@ -575,6 +575,7 @@ export type Database = {
           full_name: string
           id: string
           phone: string
+          preferred_language: string | null
           profile_pic: string | null
           subscription_tier: string
         }
@@ -585,6 +586,7 @@ export type Database = {
           full_name: string
           id?: string
           phone: string
+          preferred_language?: string | null
           profile_pic?: string | null
           subscription_tier?: string
         }
@@ -595,6 +597,7 @@ export type Database = {
           full_name?: string
           id?: string
           phone?: string
+          preferred_language?: string | null
           profile_pic?: string | null
           subscription_tier?: string
         }

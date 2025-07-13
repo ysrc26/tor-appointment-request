@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, ArrowRight, Play } from "lucide-react";
+import { useTranslation } from 'react-i18next';
 
 const HeroSection = () => {
+  const { t } = useTranslation('landing');
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-subtle">
       {/* Background decoration */}
@@ -15,34 +17,23 @@ const HeroSection = () => {
           <div className="inline-flex items-center gap-2 bg-accent/50 backdrop-blur-sm border border-primary/20 rounded-full px-3 sm:px-4 py-2 mb-4 sm:mb-6 animate-fade-in">
             <div className="w-2 h-2 bg-secondary rounded-full"></div>
             <span className="text-xs sm:text-sm font-medium text-accent-foreground">
-              Perfect for Israeli small businesses
+              {t('hero.badge')}
             </span>
           </div>
 
           {/* Main heading */}
           <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-4 sm:mb-6 animate-fade-in leading-tight">
-            Ultra-Simple
-            <span className="block bg-gradient-hero bg-clip-text text-transparent">
-              Appointment Booking
-            </span>
-            for Small Businesses
+            {t('hero.title')}
           </h1>
 
           {/* Subtitle */}
           <p className="text-base sm:text-xl md:text-2xl text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed animate-fade-in px-2">
-            Send a link → receive requests → approve manually. 
-            No complex systems, no self-booking. Just simple appointment management 
-            designed for beauticians, tutors, and therapists.
+            {t('hero.subtitle')}
           </p>
 
           {/* Benefits list */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 lg:flex lg:flex-wrap lg:justify-center lg:gap-6 mb-8 sm:mb-10 animate-fade-in max-w-2xl mx-auto">
-            {[
-              "SMS verification included",
-              "Manual approval control", 
-              "No app installation needed",
-              "Hebrew interface ready"
-            ].map((benefit, index) => (
+            {(t('hero.benefits', { returnObjects: true }) as string[]).map((benefit: string, index: number) => (
               <div key={index} className="flex items-center gap-2 justify-center sm:justify-start">
                 <CheckCircle2 className="w-4 sm:w-5 h-4 sm:h-5 text-secondary flex-shrink-0" />
                 <span className="text-sm sm:text-base text-foreground font-medium">{benefit}</span>
@@ -53,19 +44,19 @@ const HeroSection = () => {
           {/* CTA buttons */}
           <div className="flex flex-col gap-3 sm:gap-4 justify-center items-center mb-8 sm:mb-12 animate-scale-in px-4">
             <Button variant="hero" size="lg" className="group w-full sm:w-auto">
-              Start Free Trial
+              {t('hero.cta.primary')}
               <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
             <Button variant="premium" size="lg" className="group w-full sm:w-auto">
               <Play className="w-4 sm:w-5 h-4 sm:h-5 group-hover:scale-110 transition-transform" />
-              Watch Demo
+              {t('hero.cta.secondary')}
             </Button>
           </div>
 
           {/* Social proof */}
           <div className="text-center animate-fade-in">
             <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
-              Trusted by 500+ Israeli small businesses
+              {t('hero.socialProof')}
             </p>
             <div className="flex justify-center items-center gap-4 sm:gap-8 opacity-60">
               {/* Placeholder for business logos/testimonials */}
@@ -77,7 +68,7 @@ const HeroSection = () => {
                   ></div>
                 ))}
               </div>
-              <span className="text-xs sm:text-sm font-medium">+495 more</span>
+              <span className="text-xs sm:text-sm font-medium">+995 more</span>
             </div>
           </div>
         </div>

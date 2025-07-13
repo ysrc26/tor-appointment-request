@@ -1,6 +1,9 @@
 import { Calendar, Mail, Phone, MessageCircle } from "lucide-react";
+import { useTranslation } from 'react-i18next';
+import { LanguageSelector } from './LanguageSelector';
 
 const Footer = () => {
+  const { t } = useTranslation('common');
   return (
     <footer className="bg-foreground text-background py-12 sm:py-16">
       <div className="container mx-auto px-3 sm:px-4">
@@ -32,10 +35,10 @@ const Footer = () => {
 
           {/* Product */}
           <div>
-            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Product</h4>
+            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">{t('footer.product')}</h4>
             <ul className="space-y-1 sm:space-y-2 text-background/80">
-              <li><a href="#features" className="hover:text-background transition-colors text-sm sm:text-base">Features</a></li>
-              <li><a href="#pricing" className="hover:text-background transition-colors text-sm sm:text-base">Pricing</a></li>
+              <li><a href="#features" className="hover:text-background transition-colors text-sm sm:text-base">{t('footer.features')}</a></li>
+              <li><a href="#pricing" className="hover:text-background transition-colors text-sm sm:text-base">{t('footer.pricing')}</a></li>
               <li><a href="#demo" className="hover:text-background transition-colors text-sm sm:text-base">Demo</a></li>
               <li><a href="#" className="hover:text-background transition-colors text-sm sm:text-base">Templates</a></li>
             </ul>
@@ -43,11 +46,11 @@ const Footer = () => {
 
           {/* Support */}
           <div>
-            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Support</h4>
+            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">{t('footer.support')}</h4>
             <ul className="space-y-1 sm:space-y-2 text-background/80">
-              <li><a href="#" className="hover:text-background transition-colors text-sm sm:text-base">Help Center</a></li>
-              <li><a href="#" className="hover:text-background transition-colors text-sm sm:text-base">Contact Us</a></li>
-              <li><a href="#" className="hover:text-background transition-colors text-sm sm:text-base">WhatsApp Support</a></li>
+              <li><a href="#" className="hover:text-background transition-colors text-sm sm:text-base">{t('footer.help')}</a></li>
+              <li><a href={`mailto:${t('footer.email')}`} className="hover:text-background transition-colors text-sm sm:text-base">{t('footer.contact')}</a></li>
+              <li><a href="#" className="hover:text-background transition-colors text-sm sm:text-base">{t('footer.whatsapp')}</a></li>
               <li><a href="#" className="hover:text-background transition-colors text-sm sm:text-base">Video Tutorials</a></li>
             </ul>
           </div>
@@ -56,12 +59,12 @@ const Footer = () => {
         <div className="border-t border-background/20 pt-6 sm:pt-8 mt-8 sm:mt-12">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
             <p className="text-background/60 text-xs sm:text-sm text-center sm:text-left">
-              © 2024 MyTor. Made with ❤️ for Israeli small businesses.
+              {t('footer.copyright')}
             </p>
-            <div className="flex gap-4 sm:gap-6 text-xs sm:text-sm text-background/60">
-              <a href="#" className="hover:text-background transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-background transition-colors">Terms of Service</a>
-              <a href="#" className="hover:text-background transition-colors">English</a>
+            <div className="flex gap-4 sm:gap-6 text-xs sm:text-sm text-background/60 items-center">
+              <a href="#" className="hover:text-background transition-colors">{t('footer.privacy')}</a>
+              <a href="#" className="hover:text-background transition-colors">{t('footer.terms')}</a>
+              <LanguageSelector />
             </div>
           </div>
         </div>

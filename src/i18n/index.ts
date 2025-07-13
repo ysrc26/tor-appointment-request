@@ -9,17 +9,21 @@ import enAuth from './locales/en/auth.json';
 import heAuth from './locales/he/auth.json';
 import enDashboard from './locales/en/dashboard.json';
 import heDashboard from './locales/he/dashboard.json';
+import enLanding from './locales/en/landing.json';
+import heLanding from './locales/he/landing.json';
 
 const resources = {
   en: {
     common: enCommon,
     auth: enAuth,
     dashboard: enDashboard,
+    landing: enLanding,
   },
   he: {
     common: heCommon,
     auth: heAuth,
     dashboard: heDashboard,
+    landing: heLanding,
   },
 };
 

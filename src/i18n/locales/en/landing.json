@@ -1,0 +1,26 @@
+{
+  "hero": {
+    "badge": "✨ New Features Available",
+    "title": "Effortless Appointment Scheduling for Your Business",
+    "subtitle": "Streamline your booking process with our intuitive appointment management system. Perfect for salons, clinics, consultants, and service providers.",
+    "benefits": [
+      "24/7 online booking system",
+      "Automated SMS reminders",
+      "Client management dashboard",
+      "Real-time availability updates"
+    ],
+    "cta": {
+      "primary": "Start Free Trial",
+      "secondary": "Watch Demo"
+    },
+    "socialProof": "Trusted by 1000+ businesses worldwide"
+  },
+  "features": {
+    "title": "Everything you need to manage appointments",
+    "subtitle": "Our comprehensive solution covers all aspects of appointment scheduling and business management"
+  },
+  "pricing": {
+    "title": "Simple, transparent pricing",
+    "subtitle": "Choose the plan that works for your business"
+  }
+}
