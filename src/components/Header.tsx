@@ -3,11 +3,14 @@ import { Calendar, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useTranslation } from 'react-i18next';
+import { LanguageSelector } from './LanguageSelector';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation('common');
 
   return (
     <header className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50">
@@ -23,13 +26,13 @@ const Header = () => {
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
           <a href="#features" className="text-sm text-foreground hover:text-primary transition-colors">
-            Features
+            {t('navigation.features')}
           </a>
           <button 
             onClick={() => navigate('/pricing')}
             className="text-sm text-foreground hover:text-primary transition-colors"
           >
-            Pricing
+            {t('navigation.pricing')}
           </button>
           <a href="#demo" className="text-sm text-foreground hover:text-primary transition-colors">
             Demo
@@ -38,17 +41,18 @@ const Header = () => {
 
         {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-2 lg:gap-4">
+          <LanguageSelector />
           {user ? (
             <Button variant="hero" size="sm" onClick={() => navigate('/dashboard')} className="text-sm">
-              Dashboard
+              {t('navigation.dashboard')}
             </Button>
           ) : (
             <>
               <Button variant="ghost" size="sm" onClick={() => navigate('/auth')} className="text-sm">
-                Sign In
+                {t('navigation.login')}
               </Button>
               <Button variant="hero" size="sm" onClick={() => navigate('/auth')} className="text-sm">
-                Start Free
+                {t('buttons.getStarted')}
               </Button>
             </>
           )}
@@ -67,12 +71,13 @@ const Header = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-background border-b border-border">
           <nav className="container mx-auto px-3 sm:px-4 py-4 flex flex-col gap-3">
+            <LanguageSelector />
             <a 
               href="#features" 
               className="text-foreground hover:text-primary transition-colors py-2 text-sm"
               onClick={() => setIsMenuOpen(false)}
             >
-              Features
+              {t('navigation.features')}
             </a>
             <button 
               onClick={() => {
@@ -81,7 +86,7 @@ const Header = () => {
               }}
               className="text-foreground hover:text-primary transition-colors py-2 text-left text-sm"
             >
-              Pricing
+              {t('navigation.pricing')}
             </button>
             <a 
               href="#demo" 
@@ -93,15 +98,15 @@ const Header = () => {
             <div className="flex flex-col gap-2 pt-3 border-t border-border">
               {user ? (
                 <Button variant="hero" className="w-full" size="sm" onClick={() => navigate('/dashboard')}>
-                  My Dashboard
+                  {t('navigation.dashboard')}
                 </Button>
               ) : (
                 <>
                   <Button variant="ghost" className="w-full" size="sm" onClick={() => navigate('/auth')}>
-                    Sign In
+                    {t('navigation.login')}
                   </Button>
                   <Button variant="hero" className="w-full" size="sm" onClick={() => navigate('/auth')}>
-                    Start Free
+                    {t('buttons.getStarted')}
                   </Button>
                 </>
               )}

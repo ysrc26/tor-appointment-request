@@ -1,0 +1,53 @@
+{
+  "title": "Dashboard",
+  "welcome": "Welcome back, {{name}}!",
+  "stats": {
+    "totalAppointments": "Total Appointments",
+    "todayAppointments": "Today's Appointments",
+    "pendingAppointments": "Pending Appointments",
+    "revenue": "Revenue"
+  },
+  "menu": {
+    "overview": "Overview",
+    "appointments": "Appointments",
+    "clients": "Clients",
+    "services": "Services",
+    "availability": "Availability",
+    "business": "Business Settings",
+    "billing": "Billing",
+    "affiliate": "Affiliate Program"
+  },
+  "appointments": {
+    "title": "Appointments",
+    "new": "New Appointment",
+    "client": "Client",
+    "service": "Service",
+    "date": "Date",
+    "time": "Time",
+    "status": "Status",
+    "actions": "Actions",
+    "pending": "Pending",
+    "confirmed": "Confirmed",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
+  },
+  "clients": {
+    "title": "Clients",
+    "new": "New Client",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "totalAppointments": "Total Appointments",
+    "lastVisit": "Last Visit"
+  },
+  "business": {
+    "title": "Business Settings",
+    "businessName": "Business Name",
+    "description": "Description",
+    "phone": "Phone",
+    "address": "Address",
+    "website": "Website",
+    "logo": "Logo",
+    "hours": "Business Hours"
+  }
+}

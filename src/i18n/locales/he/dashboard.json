@@ -1,0 +1,53 @@
+{
+  "title": "ממשק ניהול",
+  "welcome": "ברוך שובך, {{name}}!",
+  "stats": {
+    "totalAppointments": "סך התורים",
+    "todayAppointments": "תורים להיום",
+    "pendingAppointments": "תורים ממתינים",
+    "revenue": "הכנסות"
+  },
+  "menu": {
+    "overview": "סקירה כללית",
+    "appointments": "תורים",
+    "clients": "לקוחות",
+    "services": "שירותים",
+    "availability": "זמינות",
+    "business": "הגדרות עסק",
+    "billing": "חיוב",
+    "affiliate": "תוכנית שותפים"
+  },
+  "appointments": {
+    "title": "תורים",
+    "new": "תור חדש",
+    "client": "לקוח",
+    "service": "שירות",
+    "date": "תאריך",
+    "time": "שעה",
+    "status": "סטטוס",
+    "actions": "פעולות",
+    "pending": "ממתין",
+    "confirmed": "מאושר",
+    "completed": "הושלם",
+    "cancelled": "בוטל"
+  },
+  "clients": {
+    "title": "לקוחות",
+    "new": "לקוח חדש",
+    "name": "שם",
+    "phone": "טלפון",
+    "email": "אימייל",
+    "totalAppointments": "סך התורים",
+    "lastVisit": "ביקור אחרון"
+  },
+  "business": {
+    "title": "הגדרות עסק",
+    "businessName": "שם העסק",
+    "description": "תיאור",
+    "phone": "טלפון",
+    "address": "כתובת",
+    "website": "אתר אינטרנט",
+    "logo": "לוגו",
+    "hours": "שעות פעילות"
+  }
+}
