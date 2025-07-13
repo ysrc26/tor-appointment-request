@@ -25,8 +25,8 @@ const PricingSection = () => {
       popular: false
     },
     {
-      name: "Personal Premium",
-      price: "₪9.90",
+      name: "Premium",
+      price: "₪19.90",
       period: "per month",
       description: "Best for individual practitioners",
       features: [
