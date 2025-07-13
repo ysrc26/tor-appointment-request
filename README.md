@@ -1,73 +1,107 @@
-# Welcome to your Lovable project
+# MyTor - מערכת ניהול תורים מתקדמת
 
-## Project info
+MyTor היא מערכת ניהול תורים מתקדמת ומקיפה עבור עסקים קטנים ובינוניים, המאפשרת ניהול יעיל של פגישות, שירותים ולקוחות.
 
-**URL**: https://lovable.dev/projects/64b271b9-e973-44d3-b2de-efa343517498
+## עיקר הפיצ'רים
 
-## How can I edit this code?
+### 🗓️ ניהול תורים ופגישות
+- יצירת ואישור תורים עם מערכת הודעות SMS
+- ניהול זמינות יומית ושבועית
+- הגדרת תאריכים לא זמינים (חופשות, חגים)
+- צפייה בלוח שנה מתקדם עם תצוגות יומיות, שבועיות וחודשיות
+- ניהול סטטוס תורים (ממתין, מאושר, בוטל)
 
-There are several ways of editing your application.
+### 🏢 ניהול עסקי
+- יצירת דף עסק ייחודי עם כתובת מותאמת אישית (mytor.app/yourname)
+- הגדרת שירותים עם מחירים ומשכי זמן שונים
+- העלאת תמונות פרופיל לעסק
+- הגדרת תנאי שירות וקישורי תשלום
+- ניהול פרטי יצירת קשר וכתובת
 
-**Use Lovable**
+### 👥 ניהול לקוחות
+- מעקב אחר היסטוריית לקוחות
+- שמירת הערות על כל לקוח
+- זיהוי לקוחות חוזרים אוטומטית
+- רשימת לקוחות מסונכרנת
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/64b271b9-e973-44d3-b2de-efa343517498) and start prompting.
+### 🔐 אבטחה ואימות
+- מערכת אימות SMS עם OTP
+- התחברות מאובטחת דרך Supabase Auth
+- מערכת הרשאות מתקדמת (RLS)
+- הגנה מפני ספאם ושימוש לרעה
 
-Changes made via Lovable will be committed automatically to this repo.
+### 💳 מערכת מנויים
+- **מנוי חינם**: עד 10 תורים בחודש
+- **מנוי פרמיום**: תורים ללא הגבלה + פיצ'רים מתקדמים
+- **מנוי עסקי**: פתרון מלא לעסקים גדולים
+- אינטגרציה מלאה עם Stripe לתשלומים
+- פורטל לקוח לניהול מנויים
 
-**Use your preferred IDE**
+### 🎯 מערכת שותפויות ואפיליאייט
+- מערכת הפניות עם קודים ייחודיים
+- זיכוי נקודות עבור הפניות מוצלחות
+- תגמולים ומבצעים מיוחדים
+- מעקב אחר סטטיסטיקות הפניות
+- מניעת הונאות עם מערכת ניקוד סיכונים
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 📱 חווית משתמש מותאמת למובייל
+- עיצוב רספונסיבי מלא
+- ממשק אינטואיטיבי ונוח לשימוש
+- טעינה מהירה ואופטימיזציה לביצועים
+- גישה נוחה מכל מכשיר
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### 🛠️ פיצ'רים טכניים
+- דף הזמנה ציבורי עבור לקוחות
+- מערכת דאשבורד מתקדמת למנהלים
+- דוחות וסטטיסטיקות מפורטים
+- גיבוי אוטומטי של מידע
+- מערכת לוגים מתקדמת
 
-Follow these steps:
+## טכנולוגיות בשימוש
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Frontend
+- **React 18** - ספריית JavaScript מודרנית
+- **TypeScript** - הוספת טיפוסים ל-JavaScript
+- **Vite** - כלי build מהיר ומתקדם
+- **Tailwind CSS** - framework CSS utility-first
+- **shadcn/ui** - רכיבי UI מתקדמים ונגישים
+- **React Router** - ניתוב בצד הלקוח
+- **React Hook Form** - ניהול טפסים מתקדם
+- **React Query (TanStack)** - ניהול state ו-cache
+- **Lucide React** - אייקונים מודרניים
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Backend & Database
+- **Supabase** - פלטפורמת backend מלאה
+- **PostgreSQL** - מסד נתונים יחסי מתקדם
+- **Row Level Security (RLS)** - אבטחת נתונים ברמת השורה
+- **Edge Functions** - פונקציות serverless
+- **Real-time subscriptions** - עדכונים בזמן אמת
 
-# Step 3: Install the necessary dependencies.
-npm i
+### שירותים חיצוניים
+- **Stripe** - מעבד תשלומים מתקדם
+- **SMS Gateway** - שירות הודעות SMS
+- **Supabase Auth** - מערכת אימות מלאה
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+### כלי פיתוח
+- **ESLint** - בדיקת איכות קוד
+- **Git** - ניהול גרסאות
+- **GitHub** - אחסון קוד ושיתוף פעולה
 
-**Edit a file directly in GitHub**
+## אדריכלות המערכת
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+המערכת בנויה על אדריכלות מודרנית ומדרגת:
+- **Frontend**: React SPA עם TypeScript
+- **Backend**: Supabase עם PostgreSQL
+- **Authentication**: Supabase Auth עם SMS OTP
+- **Payments**: Stripe Checkout ו-Customer Portal
+- **File Storage**: Supabase Storage (מוכן לעתיד)
+- **Real-time**: Supabase Realtime עבור עדכונים חיים
 
-**Use GitHub Codespaces**
+## אבטחה ופרטיות
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/64b271b9-e973-44d3-b2de-efa343517498) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- הצפנת נתונים ברמה הגבוהה ביותר
+- מערכת הרשאות מפורטת (RLS)
+- אימות דו-שלבי עם SMS
+- מניעת התקפות SQL Injection
+- הגנה מפני CSRF ו-XSS
+- ציות לתקני GDPR ופרטיות
